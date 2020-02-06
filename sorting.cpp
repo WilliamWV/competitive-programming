@@ -12,6 +12,7 @@ void print_vec(vector<int> arr, string title){
     cout<<endl;
 }
 
+///////////////////////////////// MERGE SORT //////////////////////////////////
 
 void merge(vector<int> &arr, int l, int m, int h){
     vector<int> arr_l (arr.begin() + l, arr.begin() + m + 1);
@@ -48,6 +49,39 @@ void mergesort(vector<int> &arr){
     mergesort_aux(arr, 0, arr.size() - 1);
 }
 
+///////////////////////////////// QUICK SORT //////////////////////////////////
+
+void swap(vector<int> &arr, int i, int j){
+    int temp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = temp;
+}
+
+int partition(vector<int> &arr, int l, int h){
+    int pivot = arr[h];
+    int i = l - 1;
+    for (int j = l; j < h; j++){
+        if (arr[j] < pivot){
+            i++;
+            swap(arr, i, j);
+        }
+    }
+    swap(arr, i+1, h);
+    return i+1;
+
+}
+
+void quicksort_aux(vector<int> &arr, int l, int h){
+    if(l < h){
+        int part_index = partition(arr, l, h);
+        quicksort_aux(arr, l, part_index - 1);
+        quicksort_aux(arr, part_index + 1, h);
+    } 
+}
+
+void quicksort(vector<int> &arr){
+    quicksort_aux(arr, 0, arr.size() - 1);
+}
 
 int main(){
     vector<int> v1 = {4, 6, 2, 1, 6, 7, 2, 9, 10, -1, 0, 4, 6};
@@ -57,24 +91,25 @@ int main(){
     vector<int> v5 = {-1, -1, -1, 0, -1, -1, 2, -4};
     
 
+    
     print_vec(v1, "Initial vector");
-    mergesort(v1);
+    quicksort(v1);
     print_vec(v1, "Final vector");
 
     print_vec(v2, "Initial vector");
-    mergesort(v2);
+    quicksort(v2);
     print_vec(v2, "Final vector");
 
     print_vec(v3, "Initial vector");
-    mergesort(v3);
+    quicksort(v3);
     print_vec(v3, "Final vector");
 
     print_vec(v4, "Initial vector");
-    mergesort(v4);
+    quicksort(v4);
     print_vec(v4, "Final vector");
 
     print_vec(v5, "Initial vector");
-    mergesort(v5);
+    quicksort(v5);
     print_vec(v5, "Final vector");
 
 }
