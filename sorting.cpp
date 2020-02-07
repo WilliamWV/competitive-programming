@@ -96,6 +96,10 @@ void bubblesort(vector<int> &arr){
     }
 }
 
+void sort(vector<int> &arr){
+    mergesort(arr);
+}
+
 int main(){
     vector<int> v1 = {4, 6, 2, 1, 6, 7, 2, 9, 10, -1, 0, 4, 6};
     vector<int> v2 = {4};
@@ -106,23 +110,23 @@ int main(){
 
     
     print_vec(v1, "Initial vector");
-    bubblesort(v1);
+    sort(v1);
     print_vec(v1, "Final vector");
 
     print_vec(v2, "Initial vector");
-    bubblesort(v2);
+    sort(v2);
     print_vec(v2, "Final vector");
 
     print_vec(v3, "Initial vector");
-    bubblesort(v3);
+    sort(v3);
     print_vec(v3, "Final vector");
 
     print_vec(v4, "Initial vector");
-    bubblesort(v4);
+    sort(v4);
     print_vec(v4, "Final vector");
 
     print_vec(v5, "Initial vector");
-    bubblesort(v5);
+    sort(v5);
     print_vec(v5, "Final vector");
 
 }
