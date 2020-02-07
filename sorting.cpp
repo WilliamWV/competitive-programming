@@ -83,6 +83,19 @@ void quicksort(vector<int> &arr){
     quicksort_aux(arr, 0, arr.size() - 1);
 }
 
+///////////////////////////////// BUBBLE SORT /////////////////////////////////
+
+void bubblesort(vector<int> &arr){
+    
+    for (int i = 1; i < arr.size(); i++){
+        for (int j = 0; j < arr.size() - i; j++){
+            if (arr[j] > arr[j+1]){
+                swap(arr, j, j+1);
+            }
+        }
+    }
+}
+
 int main(){
     vector<int> v1 = {4, 6, 2, 1, 6, 7, 2, 9, 10, -1, 0, 4, 6};
     vector<int> v2 = {4};
@@ -93,23 +106,23 @@ int main(){
 
     
     print_vec(v1, "Initial vector");
-    quicksort(v1);
+    bubblesort(v1);
     print_vec(v1, "Final vector");
 
     print_vec(v2, "Initial vector");
-    quicksort(v2);
+    bubblesort(v2);
     print_vec(v2, "Final vector");
 
     print_vec(v3, "Initial vector");
-    quicksort(v3);
+    bubblesort(v3);
     print_vec(v3, "Final vector");
 
     print_vec(v4, "Initial vector");
-    quicksort(v4);
+    bubblesort(v4);
     print_vec(v4, "Final vector");
 
     print_vec(v5, "Initial vector");
-    quicksort(v5);
+    bubblesort(v5);
     print_vec(v5, "Final vector");
 
 }
