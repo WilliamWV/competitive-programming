@@ -1,26 +1,6 @@
-#include <iostream>
-#include <vector>
-#include <climits>
-#include <stack>
-#include <queue>
-#include "mm.h"
+#include "graph.h"
 
 using namespace std;
-
-void print_vec(vector<int> arr, string title){
-    cout<<title<<endl;
-    for (int i = 0; i < arr.size(); i++){
-        cout<<arr[i]<<' ';
-    }
-    cout<<endl;
-}
-
-//Graph represented as a matrix
-
-typedef struct{
-    int** graph; 
-    int nodes;
-} Graph;
 
 Graph* init_graph(int nodes){
     Graph* new_graph = (Graph*) allocate(sizeof(Graph));

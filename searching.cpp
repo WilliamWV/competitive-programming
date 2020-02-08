@@ -1,5 +1,4 @@
-#include <iostream>
-#include <vector>
+#include "searching.h"
 
 using namespace std;
 
