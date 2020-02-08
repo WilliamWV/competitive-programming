@@ -15,6 +15,14 @@ Graph* init_graph(int nodes){
     return new_graph;
 }
 
+Edge* create_edge(int src, int dst, int weight){
+    Edge* new_edge = (Edge*) allocate(sizeof(Edge));
+    new_edge->src = src;
+    new_edge->dst = dst;
+    new_edge->weight = weight;
+    return new_edge;
+}
+
 void add_arc(Graph* graph, int src, int dst, int weight){
     // keep only the edge with smallest weight
     if (graph->graph[src][dst] > weight){
@@ -213,8 +221,110 @@ Graph* dijkstra_graph(Graph* graph, int src){
     return dk_graph;
 }
 
-int kruskal_cost(Graph* graph);
-Graph* mst(Graph* graph);
+vector<Edge*> build_edges(Graph* graph){
+    vector<Edge*> edges;
+
+    for (int i = 0; i < graph->nodes; i++){
+        for (int j = i; j<graph->nodes; j++){
+            if (graph->graph[i][j] < INT_MAX){
+                edges.push_back(create_edge(i, j, graph->graph[i][j]));
+            }
+        }
+    }
+    return edges;
+}
+
+intmap build_subsets(Graph* graph){
+    intmap subsets;
+    for (int i = 0; i < graph->nodes; i++){
+        subsets[i] = i;
+    }
+    return subsets;
+}
+
+bool compare_edges(Edge* e1, Edge* e2){
+    return e1->weight < e2->weight;
+}
+
+void unite_subsets(intmap & subsets, int s1, int s2){
+    int smaller = s1;
+    int bigger = s2;
+    if (s1 > s2){
+        smaller = s2;
+        bigger = s1;
+    }
+    for (intmap::iterator it = subsets.begin(); it != subsets.end(); it++){
+        if (it->second == bigger){
+            subsets[it->first] = smaller;
+        }
+    }
+}
+
+int subset_count(intmap subsets){
+    int max_subset = 0;
+    for (intmap::iterator it = subsets.begin(); it != subsets.end(); it++){
+        if (it->second > max_subset){
+            max_subset = it->second;
+        }
+    }
+    return max_subset + 1;
+}
+
+int kruskal_cost(Graph* graph){
+
+    vector<Edge*> edges = build_edges(graph);
+    int edge_cost = 0;
+    intmap subsets = build_subsets(graph);
+
+    sort(edges.begin(), edges.end(), compare_edges);
+
+    int edge_index = 0;
+    while (edge_index < edges.size() && subset_count(subsets) > 1){
+        Edge* next_edge = edges[edge_index];
+        if (subsets[next_edge->dst] != subsets[next_edge->src]){
+            unite_subsets(subsets, subsets[next_edge->dst], subsets[next_edge->src]);
+            edge_cost+= next_edge->weight;
+        }
+    }
+    return edge_cost;
+
+}
+
+Graph* mount_graph(vector<Edge*> edges){
+    int n = 0;
+    for (int i = 0; i < edges.size(); i++){
+        n = max(edges[i]->src, edges[i]->dst);
+    }
+    Graph* mounted = init_graph(n+1);
+    for (int i = 0; i < edges.size(); i++){
+        add_edge(mounted, edges[i]->src, edges[i]->dst, edges[i]->weight);
+    }
+    return mounted;
+}
+
+Graph* kruskal_mst(Graph* graph){
+
+    vector<Edge*> edges = build_edges(graph);
+    vector<Edge*> result;
+    intmap subsets = build_subsets(graph);
+
+    sort(edges.begin(), edges.end(), compare_edges);
+
+    int edge_index = 0;
+    while (edge_index < edges.size() && subset_count(subsets) > 1){
+        Edge* next_edge = edges[edge_index];
+        if (subsets[next_edge->dst] != subsets[next_edge->src]){
+            unite_subsets(subsets, subsets[next_edge->dst], subsets[next_edge->src]);
+            result.push_back(next_edge);
+        }
+    }
+    return mount_graph(result);
+}
+
+Graph* mst(Graph* graph){
+    return kruskal_mst(graph);
+}
+
 int** floyd_warshall(Graph* graph);
 
 
