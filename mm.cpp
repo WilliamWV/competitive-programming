@@ -75,7 +75,7 @@ void deallocate_all()
 	}
 }
 
-
+/*
 int main(){
     int* p1 = (int*) allocate(sizeof(int));
     double* p2 = (double*) allocate(sizeof(double));
@@ -95,3 +95,4 @@ int main(){
     // valgrind --leak-check=yes ./mm
 
 }
+*/

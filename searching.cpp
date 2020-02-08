@@ -51,6 +51,5 @@ int main(){
     cout<< "Index of element 0 on u2: " << linear_search(u2, 0)<<endl;
     cout<< "Index of element 78 on u3: " << linear_search(u3, 78)<<endl;
     cout<< "Index of element 42 on u3: " << linear_search(u3,42)<<endl;
-
-
+ 
 }
