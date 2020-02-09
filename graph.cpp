@@ -9,7 +9,12 @@ Graph* init_graph(int nodes){
     for (int i = 0; i < nodes; i++){
         new_graph->graph[i] = (int*) allocate(sizeof(int) * nodes);
         for (int j = 0; j < nodes; j++){
-            new_graph->graph[i][j] = INT_MAX;
+            if (i == j){
+                new_graph->graph[i][j] = 0;
+            }
+            else{
+                new_graph->graph[i][j] = INT_MAX;
+            }
         }
     }
     return new_graph;
