@@ -86,7 +86,14 @@ bool contains_point(Line* l, Point* p){
     );
 }
 
-double line_point_distance(Line* l, Point* p);
+double line_point_distance(Line* l, Point* p){
+    Line_equation* eq = get_equation(l);
+    double a = eq->a;
+    double b = -1;
+    double c = eq->b;
+
+    return abs(a * p->x + b * p->y + c)/sqrt(a * a + b * b);
+}
 
 void convex_hull(vector<Point*> points);
 
