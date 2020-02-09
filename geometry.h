@@ -1,10 +1,11 @@
 #include <iostream>
 #include <vector>
+#include <cmath>
 #include "mm.h"
 
 typedef struct point{
-    int x;
-    int y;
+    double x;
+    double y;
 } Point;
 
 typedef struct line{
@@ -13,15 +14,26 @@ typedef struct line{
     bool finite;
 } Line;
 
-Point* create_point(int x, int y);
+// Equation of a line as in: ax + b = y 
+typedef struct line_eq{
+    double a;
+    double b;
+} Line_equation;
 
-Line* create_line(int x, int y);
+
+Point* create_point(double x, double y);
+
+Line* create_line(Point* p1, Point* p2, bool finite = false);
+
+Line_equation* get_equation(Line* l);
 
 double distance(Point* p1, Point* p2);
 
 void rotate_point(Point* p1, double angle);
 
-bool intersect(Line* l1, Lin2* l2);
+bool intersect(Line* l1, Line* l2);
+
+Point* intersection(Line* l1, Line* l2);
 
 bool contains_point(Line* l, Point* p);
 
