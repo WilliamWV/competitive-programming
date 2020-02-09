@@ -327,7 +327,30 @@ Graph* mst(Graph* graph){
     return kruskal_mst(graph);
 }
 
-int** floyd_warshall(Graph* graph);
+vector<vector<int>> floyd_warshall(Graph* graph){
+    vector<vector<int>> dist;
+
+    for (int i = 0; i < graph->nodes; i++){
+        vector<int> temp;
+        dist.push_back(temp);
+        for(int j = 0; j < graph->nodes; j++){
+            dist[i].push_back(graph->graph[i][j]);
+        }
+    }
+
+    for(int i = 0; i < graph->nodes; i++){
+        for(int j = 0; j < graph->nodes; j++){
+            for (int k = 0; k < graph->nodes; k++){
+                if (dist[i][k] < INT_MAX && dist[k][j] < INT_MAX &&
+                    dist[i][j] > dist[i][k] + dist[k][j]
+                    ){
+                    dist[i][j] = dist[i][k] + dist[k][j];
+                }
+            }
+        }
+    }
+    return dist;
+}
 
 
 int main(){
@@ -371,6 +394,8 @@ int main(){
     cout<<"The cost of the minimum spamming tree is: "<<kruskal_cost(t_graph)<<endl;
     cout<<"The MST graph is: ";
     print_graph(mst(t_graph));
+
+    print_mat(floyd_warshall(t_graph), "min distance between every node");
 
     deallocate_all();
 }

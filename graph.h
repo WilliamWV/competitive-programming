@@ -55,4 +55,4 @@ int kruskal_cost(Graph* graph);
 
 Graph* mst(Graph* graph);
 
-int** floyd_warshall(Graph* graph);
+std::vector<std::vector<int>> floyd_warshall(Graph* graph);
