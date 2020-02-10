@@ -41,5 +41,9 @@ bool contains_point(Line* l, Point* p);
 
 double line_point_distance(Line* l, Point* p)
 
-void convex_hull(std::vector<Point*> points);
+std::vector<Point*> convex_hull(std::vector<Point*> points);
+
+void print_point(Point* p);
+
+void print_line(Line* l);
 
