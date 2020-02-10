@@ -95,5 +95,92 @@ double line_point_distance(Line* l, Point* p){
     return abs(a * p->x + b * p->y + c)/sqrt(a * a + b * b);
 }
 
-void convex_hull(vector<Point*> points);
+void swap(vector<int> &arr, int i, int j){
+    int temp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = temp;
+}
+
+Point* pivot;
+
+double angle_to_pivot(Point* p){
+    return atan2(p->y - pivot->y, p->x - pivot->x);
+}
+
+bool angle_cmp(Point* p1, Point* p2){
+    double p1_angle = angle_to_pivot(p1);
+    double p2_angle = angle_to_pivot(p2);
+
+    if (p1_angle != p2_angle)
+        return p1_angle < p2_angle;
+    else
+        return distance(p1, pivot) < distance(p2, pivot);
+}
+
+
+#define CLOCKWISE 1
+#define COLINEAR 0
+#define COUNTERCLOCKWISE -1
+
+// find orientation of the ordered triplet, this will determines
+// if it does a curve to the right (clockwise) or to the left (counterclockwise)
+// 1 -> clockwise
+// 0 -> colinear points
+// -1 -> counterclockwise (convex polygon)
+int orientation(Point* p1, Point* p2, Point* p3){
+    int value = (p2->y - p1->y) * (p3->x - p2->x) - 
+                (p2->x - p1->x) * (p3->y - p2->y);
+    
+    if (value == 0) return COLINEAR;
+    return (value > 0)? CLOCKWISE : COUNTERCLOCKWISE;
+}
+
+vector<Point*> convex_hull(vector<Point*> points){
+    if (points.size() <= 3){
+        return points;
+    }
+
+    int pivot_index = 0;
+    for (int i = 0; i < points.size(); i++){
+        if (points[i]->y < points[pivot][y] || (points[pivot]->y == points[i]->y && points[i]->x < points[pivot]->x))
+            pivot_index = i;
+    }
+
+    swap(points, 0, pivot_index);
+
+    pivot = points[0];
+
+    sort(++points.begin(), points.end(), angle_cmp); // the pivot (points[0]) is not sorted
+    // check for multiple angles and keep the farthest
+
+    vector<Point*> single_angles;
+    single_angles.push_back(points[0]);
+
+    for(int i = 2; i < points.size(); i++){ // starts at 2 to not consider the pivot itself
+        if (angle_to_pivot(points[i]) != angle_to_pivot(points[i-1])){
+            single_angles.push_back(points[i-1]);
+        }
+    }
+    single_angles.push_back(points[points.size() - 1]);
+
+    if (single_angles.size() < 3) return single_angles;
+
+    vector<Point*> ch;
+    ch.push_back(single_angles[0]);
+    ch.push_back(single_angles[1]);
+    ch.push_back(single_angles[2]);
+
+    int ch_points = 3;
+    for (int i = 3; i < single_angles.size(); i++){
+        while (orientation(ch[ch_points-2], ch[ch_points-1], points[i]) != COUNTERCLOCKWISE){
+            ch.pop_back();
+            ch_points--;
+        }
+        ch.push_back(single_angles[i]);
+        ch_points++;
+    }
+    
+    return ch;
+    
+}
 

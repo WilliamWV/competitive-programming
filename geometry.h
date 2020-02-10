@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
+#include <algorithm>
+#include <stack>
 #include "mm.h"
 
 typedef struct point{
