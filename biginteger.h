@@ -20,17 +20,29 @@ public:
     //-(only if is the first charactere), 0, 1, 2, 3, 4, 5, 6, 7, 8 and 9
     explicit BigInteger(std::string num);
     BigInteger(LL num);
+    bool isNonnegative();
+    string toString();
 
-    BigInteger operator + (BigInteger const &, BigInteger const &);
-    BigInteger operator - (BigInteger const &, BigInteger const &);
-    BigInteger operator * (BigInteger const &, BigInteger const &);
-    BigInteger operator / (BigInteger const &, BigInteger const &);
-    BigInteger operator % (BigInteger const &, BigInteger const &);
+    void operator = (BigInteger b);
+
+    BigInteger operator +(const BigInteger &b);
+    BigInteger operator -(const BigInteger &b);
+    BigInteger operator *(const BigInteger &b);
+    BigInteger operator /(const BigInteger &b);
+    BigInteger operator %(const BigInteger &b);
     
-    BigInteger operator > (BigInteger const &, BigInteger const &);
+    BigInteger operator -();
 
-    friend std::ostream& operator<<(std::ostream& out, const BigInteger &);
-    friend std::istream& operator>>(std::istream& inp, BigInteger &);
+    bool operator >(const BigInteger &b);
+    bool operator <(const BigInteger &b);
+    bool operator >=(const BigInteger &b);
+    bool operator <=(const BigInteger &b);
+    bool operator ==(const BigInteger &b);
+    bool operator !=(const BigInteger &b);
+    
+
+    std::ostream& operator<<(std::ostream& out, const BigInteger &);
+    std::istream& operator>>(std::istream& inp, BigInteger &);
 
     
 }
