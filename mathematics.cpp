@@ -15,8 +15,6 @@ int lcm(int a, int b){
     return (a * b) / gcd(a, b);
 }
 
-vector<int> prime_factors(BigNumber n);
-
 vector<int> prime_factors(ULL n){
 
     vector<int> factors;
@@ -35,8 +33,6 @@ vector<int> prime_factors(ULL n){
     return factors;
 
 }
-
-bool is_prime(BigNumber n);
 
 bool is_prime(ULL n){
     if (n == 2 || n == 3) return true;
@@ -100,17 +96,3 @@ ULL nth_prime(int n){
         }
     }
 }
-
-BigNumber init_big_number(std::string number);
-
-BigNumber add(BigNumber n1, BigNumber n2);
-
-BigNumber sub(BigNumber n1, BigNumber n2);
-
-BigNumber mult(BigNumber n1, BigNumber n2);
-
-BigNumber div(BigNumber n1, BigNumber n2);
-
-BigNumber mod(BigNumber n1, BigNumber n2);
-
-void print_big_number(BigNUmber n);
