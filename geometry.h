@@ -39,7 +39,7 @@ Point* intersection(Line* l1, Line* l2);
 
 bool contains_point(Line* l, Point* p);
 
-double line_point_distance(Line* l, Point* p)
+double line_point_distance(Line* l, Point* p);
 
 std::vector<Point*> convex_hull(std::vector<Point*> points);
 
