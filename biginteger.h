@@ -16,12 +16,19 @@ private:
     void setDigits(std::vector<BYTE> digs);
     void setNonNegative(bool nn);
     void setFromString(std::string num);
-    // WHEN IMPLEMENTING THIS MUST AVOID ADDITIONAL ZEROS ON THE LEFT 
-    BigInteger simpleSum(std::vector<BYTE> a, std::vector<BYTE> b);
-    BigInteger simpleSub(std::vector<BYTE> gr, std::vector<BYTE> sm);
-    BigInteger simpleMul(std::vector<BYTE> a, std::vector<BYTE> b);
-    BigInteger simpleDiv(std::vector<BYTE> n, std::vector<BYTE> d);
-    BigInteger simpleMod(std::vector<BYTE> n, std::vector<BYTE> d);
+    
+    std::vector<BYTE> simpleSum(std::vector<BYTE> a, std::vector<BYTE> b);
+    std::vector<BYTE> simpleSub(std::vector<BYTE> gr, std::vector<BYTE> sm);
+    std::vector<BYTE> simpleMul(std::vector<BYTE> a, std::vector<BYTE> b);
+    std::vector<BYTE> simpleDiv(std::vector<BYTE> n, std::vector<BYTE> d);
+    std::vector<BYTE> simpleMod(std::vector<BYTE> n, std::vector<BYTE> d);
+    bool simpleSm(std::vector<BYTE> a, std::vector<BYTE> b);
+    
+    BYTE oneDigitQuocient(std::vector<BYTE> n, std::vector<BYTE> d);
+    std::vector<BYTE> mulOneDigit(std::vector<BYTE> a, BYTE digit);
+    std::vector<BYTE> fillLeftZeros(std::vector<BYTE> n, int size);
+    std::vector<BYTE> removeLeftZeros(std::vector<BYTE> n);
+    
 
 public:
     
