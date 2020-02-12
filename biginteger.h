@@ -10,9 +10,18 @@ class BigInteger {
 private:
     // The number will be represented as a vector of unsigned 8-bit integers (BYTE)
     // where a number such as 240 would become: number[0] = 0; number[1] = 4; number[2] = 2
-    std::vector<BYTE> number;
-    bool nonnegative;
-    BigInteger(std::vector<BYTE> num, bool nn);
+    std::vector<BYTE> m_digits;
+    bool m_nonnegative;
+    
+    void setDigits(std::vector<BYTE> digs);
+    void setNonNegative(bool nn);
+    void setFromString(std::string num);
+    // WHEN IMPLEMENTING THIS MUST AVOID ADDITIONAL ZEROS ON THE LEFT 
+    BigInteger simpleSum(std::vector<BYTE> a, std::vector<BYTE> b);
+    BigInteger simpleSub(std::vector<BYTE> gr, std::vector<BYTE> sm);
+    BigInteger simpleMul(std::vector<BYTE> a, std::vector<BYTE> b);
+    BigInteger simpleDiv(std::vector<BYTE> n, std::vector<BYTE> d);
+    BigInteger simpleMod(std::vector<BYTE> n, std::vector<BYTE> d);
 
 public:
     
@@ -21,28 +30,32 @@ public:
     explicit BigInteger(std::string num);
     BigInteger(LL num);
     bool isNonnegative();
-    string toString();
+    std::string toString();
+    std::vector<BYTE> getDigits();
+    BigInteger absolute();
+    bool isZero();
+    
 
     void operator = (BigInteger b);
 
-    BigInteger operator +(const BigInteger &b);
-    BigInteger operator -(const BigInteger &b);
-    BigInteger operator *(const BigInteger &b);
-    BigInteger operator /(const BigInteger &b);
-    BigInteger operator %(const BigInteger &b);
+    BigInteger operator +(BigInteger b);
+    BigInteger operator -(BigInteger b);
+    BigInteger operator *(BigInteger b);
+    BigInteger operator /(BigInteger b);
+    BigInteger operator %(BigInteger b);
     
     BigInteger operator -();
 
-    bool operator >(const BigInteger &b);
-    bool operator <(const BigInteger &b);
-    bool operator >=(const BigInteger &b);
-    bool operator <=(const BigInteger &b);
-    bool operator ==(const BigInteger &b);
-    bool operator !=(const BigInteger &b);
+    bool operator >(BigInteger b);
+    bool operator <(BigInteger b);
+    bool operator >=(BigInteger b);
+    bool operator <=(BigInteger b);
+    bool operator ==(BigInteger b);
+    bool operator !=(BigInteger b);
     
 
-    std::ostream& operator<<(std::ostream& out, const BigInteger &);
-    std::istream& operator>>(std::istream& inp, BigInteger &);
+    friend std::ostream& operator<<(std::ostream& out, BigInteger &b);
 
-    
+    friend std::istream& operator>>(std::istream& inp, BigInteger &b);
+
 }
