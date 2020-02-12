@@ -11,7 +11,6 @@ void BigInteger::setNonNegative(bool nn){
 }
 
 void BigInteger::setFromString(string num){
-    
     vector<BYTE> digits;
 
     if(!verify_string(num)) throw invalid_argument("String \"" + num + "\" is invalid to create BigInteger");
@@ -23,20 +22,16 @@ void BigInteger::setFromString(string num){
             digits.push_back((BYTE) num[i] - '0');
     }
 
-    // erase zeros on the left
-    bool nonzero = false;
-    for(int i = digits.size()-1; i >0 || nonzero; i--){
-        if (digits[i] == 0){
-            digits.erase(digits.begin() + i);
-        }
-        else{
-            nonzero = true;
-        }
-    }
-
+    digits = removeLeftZeros(digits);
+    
     this->setDigits(digits);
 }
 
+BigInteger::BigInteger(){
+    this->setNonNegative(true);
+    this->setDigits({0});
+}
+    
 
 BigInteger::BigInteger(LL num){
     
@@ -52,7 +47,7 @@ BigInteger::BigInteger(LL num){
     this->setDigits(digits);
 }
 
-bool verify_string(string candidate){
+bool BigInteger::verify_string(string candidate){
     for(int i = 0; i<candidate.length(); i++){
         if(!((candidate[i] >= '0' && candidate[i] <= '9') || (candidate[i] == '-' && i == 0))){
             return false;
@@ -66,11 +61,11 @@ BigInteger::BigInteger(string num){
 }
 
 bool BigInteger::isNonnegative(){
-    return nonnegative;
+    return m_nonnegative;
 }
 
 vector<BYTE> BigInteger::getDigits(){
-    return digits;
+    return m_digits;
 }
 
 BigInteger BigInteger::absolute(){
@@ -102,8 +97,8 @@ bool BigInteger::isZero(){
     
 
 void BigInteger::operator = (BigInteger b){
-    this->setDigits(b.getDigits);
-    this->setNonNegative(b.isNonnegative);
+    this->setDigits(b.getDigits());
+    this->setNonNegative(b.isNonnegative());
 }
 
 BigInteger BigInteger::operator +(BigInteger b){
@@ -174,6 +169,7 @@ BigInteger BigInteger::operator -(){
     inv.setDigits(this->getDigits());
     if(!this->isZero())
         inv.setNonNegative(!this->isNonnegative());
+    return inv;
 }
 
 bool BigInteger::operator >(BigInteger b){
@@ -236,7 +232,7 @@ bool BigInteger::operator ==(BigInteger b){
 
     if (this_digs.size() != b_digs.size()) return false;
 
-    for(int i = this_digs.size(); i++){
+    for(int i = 0; i<this_digs.size(); i++){
         if (this_digs[i] != b_digs[i]) return false; 
     }
     return true;
@@ -247,12 +243,12 @@ bool BigInteger::operator !=(BigInteger b){
 }
 
 
-ostream& BigInteger::operator<<(ostream& out, BigInteger &b){
+ostream& operator<<(ostream& out, BigInteger &b){
     out<<b.toString();
     return out;
 }
 
-istream& BigInteger::operator>>(istream& inp, BigInteger &b){
+istream& operator>>(istream& inp, BigInteger &b){
     string s;
     inp >> s;
     BigInteger fromStr(s);
@@ -261,7 +257,7 @@ istream& BigInteger::operator>>(istream& inp, BigInteger &b){
 }
 
 
-vector<BYTE> fillLeftZeros(vector<BYTE> n, int size){
+vector<BYTE> BigInteger::fillLeftZeros(vector<BYTE> n, int size){
     
     for(int i = 0; i < size - n.size(); i++){
         n.push_back(0);
@@ -269,17 +265,13 @@ vector<BYTE> fillLeftZeros(vector<BYTE> n, int size){
     return n;
 }
 
-vector<BYTE> removeLeftZeros(vector<BYTE> n){
+vector<BYTE> BigInteger::removeLeftZeros(vector<BYTE> n){
     bool zero = true;
-    for (int i = n.size()-1; i>0 && zero; i--){
-        if (n[i] == 0){
-            n.erase(n.begin() + i);
-
-        }
-        else{
-            zero = false;
-        }
+    
+    while (n.size() > 1 && n[n.size()-1] == 0){
+        n.erase(n.begin());
     }
+
     return n;
 }
     
@@ -397,7 +389,7 @@ vector<BYTE> BigInteger::simpleDiv(vector<BYTE> n, vector<BYTE> d){
     int d_size = d.size();
     int n_size = n.size();
 
-    if (simpleSm(n, d)) return 0;
+    if (simpleSm(n, d)) return {0};
 
     vector<BYTE> m;
     // make m the most sigificant digit of n
@@ -416,4 +408,56 @@ vector<BYTE> BigInteger::simpleDiv(vector<BYTE> n, vector<BYTE> d){
 vector<BYTE> BigInteger::simpleMod(vector<BYTE> n, vector<BYTE> d){
     vector<BYTE> q = simpleDiv(n, d);
     return (simpleSub(n, simpleMul(d, q)));
+}
+
+int main(){
+
+    cout<<"Initializing BigIntegers with string"<<endl;
+
+    BigInteger s1("12345");
+    BigInteger s2("12345727310102938475692039846583438929030283613");
+    BigInteger s3("-7382930283675649203");
+    BigInteger s4("2837465924");
+    BigInteger s5("92834740233");
+
+    cout<<"Initialized: "<<endl<<s1<<endl<<s2<<endl<<s3<<endl<<s4<<endl<<s5<<endl;;
+    cout<<"Initializing BigIntegers with long int"<<endl;
+    
+    BigInteger l1(203948402);
+    BigInteger l2(28394823023);
+    BigInteger l3(-293849203);
+    BigInteger l4(-983892756749);
+    BigInteger l5(19203954);
+    
+    cout<<"Initialized: "<<endl<<l1<<endl<<l2<<endl<<l3<<endl<<l4<<endl<<l5<<endl;;
+
+
+    /*
+    bool isNonnegative();
+    std::string toString();
+    std::vector<BYTE> getDigits();
+    BigInteger absolute();
+    bool isZero();
+    
+
+    void operator = (BigInteger b);
+
+    BigInteger operator +(BigInteger b);
+    BigInteger operator -(BigInteger b);
+    BigInteger operator *(BigInteger b);
+    BigInteger operator /(BigInteger b);
+    BigInteger operator %(BigInteger b);
+    
+    BigInteger operator -();
+
+    bool operator >(BigInteger b);
+    bool operator <(BigInteger b);
+    bool operator >=(BigInteger b);
+    bool operator <=(BigInteger b);
+    bool operator ==(BigInteger b);
+    bool operator !=(BigInteger b);
+    
+    friend std::istream& operator>>(std::istream& inp, BigInteger &b);
+    
+    */
 }

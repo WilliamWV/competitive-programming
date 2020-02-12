@@ -16,6 +16,8 @@ private:
     void setDigits(std::vector<BYTE> digs);
     void setNonNegative(bool nn);
     void setFromString(std::string num);
+
+    bool verify_string(std::string candidate);
     
     std::vector<BYTE> simpleSum(std::vector<BYTE> a, std::vector<BYTE> b);
     std::vector<BYTE> simpleSub(std::vector<BYTE> gr, std::vector<BYTE> sm);
@@ -29,6 +31,7 @@ private:
     std::vector<BYTE> fillLeftZeros(std::vector<BYTE> n, int size);
     std::vector<BYTE> removeLeftZeros(std::vector<BYTE> n);
     
+    
 
 public:
     
@@ -36,6 +39,7 @@ public:
     //-(only if is the first charactere), 0, 1, 2, 3, 4, 5, 6, 7, 8 and 9
     explicit BigInteger(std::string num);
     BigInteger(LL num);
+    BigInteger();
     bool isNonnegative();
     std::string toString();
     std::vector<BYTE> getDigits();
@@ -60,9 +64,8 @@ public:
     bool operator ==(BigInteger b);
     bool operator !=(BigInteger b);
     
-
     friend std::ostream& operator<<(std::ostream& out, BigInteger &b);
+    friend std::istream& operator>>(std::istream& inp, BigInteger &b);    
 
-    friend std::istream& operator>>(std::istream& inp, BigInteger &b);
+};
 
-}
