@@ -68,12 +68,12 @@ vector<BYTE> BigInteger::getDigits(){
     return m_digits;
 }
 
-BigInteger BigInteger::absolute(){
+BigInteger& BigInteger::absolute(){
     
-    BigInteger abs_val;
-    abs_val.setDigits(this->getDigits());
-    abs_val.setNonNegative(true);
-    return abs_val;
+    BigInteger* abs_val = new BigInteger();
+    abs_val->setDigits(this->getDigits());
+    abs_val->setNonNegative(true);
+    return (*abs_val);
     
 }
     
@@ -431,14 +431,43 @@ int main(){
     
     cout<<"Initialized: "<<endl<<l1<<endl<<l2<<endl<<l3<<endl<<l4<<endl<<l5<<endl;;
 
+    cout<<s1<<" is ";
+    if (s1.isNonnegative()){
+        cout<<"non-negative"<<endl;
+    }
+    else{
+        cout<<"negative"<<endl;
+    }
+    cout<<l3<<" is ";
+    if (l3.isNonnegative()){
+        cout<<"non-negative"<<endl;
+    }
+    else{
+        cout<<"negative"<<endl;
+    }
+    cout<<l4<<" is ";
+    if (l4.isNonnegative()){
+        cout<<"non-negative"<<endl;
+    }
+    else{
+        cout<<"negative"<<endl;
+    }
+
+    cout<<"Digits of "<<s3<<" are:"<<endl;
+    vector<BYTE> s3_digs = s3.getDigits();
+    for (int i = 0; i<s3_digs.size(); i++){
+        cout<<(int)s3_digs[i]<<' ';
+    }
+    cout<<endl;
+
+    cout<<"The absolute value of "<<l3<<" is "<<l3.absolute()<<endl;
+    cout<<"The absolute value of "<<l1<<" is "<<l1.absolute()<<endl;
+
+    BigInteger zero("0");
+    cout<<zero<<" == 0? "<<zero.isZero()<<endl;
+    cout<<l2<<" == 0? "<<l2.isZero()<<endl;
 
     /*
-    bool isNonnegative();
-    std::string toString();
-    std::vector<BYTE> getDigits();
-    BigInteger absolute();
-    bool isZero();
-    
 
     void operator = (BigInteger b);
 

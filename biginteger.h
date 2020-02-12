@@ -43,7 +43,7 @@ public:
     bool isNonnegative();
     std::string toString();
     std::vector<BYTE> getDigits();
-    BigInteger absolute();
+    BigInteger& absolute();
     bool isZero();
     
 
