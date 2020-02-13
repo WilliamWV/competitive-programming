@@ -49,13 +49,13 @@ public:
 
     void operator = (BigInteger b);
 
-    BigInteger operator +(BigInteger b);
-    BigInteger operator -(BigInteger b);
-    BigInteger operator *(BigInteger b);
-    BigInteger operator /(BigInteger b);
-    BigInteger operator %(BigInteger b);
+    BigInteger& operator +(BigInteger b);
+    BigInteger& operator -(BigInteger b);
+    BigInteger& operator *(BigInteger b);
+    BigInteger& operator /(BigInteger b);
+    BigInteger& operator %(BigInteger b);
     
-    BigInteger operator -();
+    BigInteger& operator -();
 
     bool operator >(BigInteger b);
     bool operator <(BigInteger b);

@@ -101,8 +101,8 @@ void BigInteger::operator = (BigInteger b){
     this->setNonNegative(b.isNonnegative());
 }
 
-BigInteger BigInteger::operator +(BigInteger b){
-    BigInteger result;
+BigInteger& BigInteger::operator +(BigInteger b){
+    BigInteger* result = new BigInteger();
     bool this_nn = this->isNonnegative();
     bool b_nn = b.isNonnegative();
 
@@ -110,66 +110,66 @@ BigInteger BigInteger::operator +(BigInteger b){
     vector<BYTE> b_digs = b.getDigits();
 
     if (this_nn == b_nn){
-        result.setDigits(simpleSum(this_digs, b_digs));
-        result.setNonNegative(this_nn);
+        result->setDigits(simpleSum(this_digs, b_digs));
+        result->setNonNegative(this_nn);
     }
     else if (this->absolute() > b.absolute()){
-        result.setDigits(simpleSub(this_digs, b_digs));
-        result.setNonNegative(this_nn);
+        result->setDigits(simpleSub(this_digs, b_digs));
+        result->setNonNegative(this_nn);
     }
     else{
-        result.setDigits(simpleSub(b_digs, this_digs));
-        result.setNonNegative(b_nn);
+        result->setDigits(simpleSub(b_digs, this_digs));
+        result->setNonNegative(b_nn);
     }
-    return result;
+    return (*result);
 }
 
-BigInteger BigInteger::operator -(BigInteger b){
+BigInteger& BigInteger::operator -(BigInteger b){
     b.setNonNegative( ! b.isNonnegative());
     return (*this) + b;
 }
 
-BigInteger BigInteger::operator *(BigInteger b){
-    BigInteger result;
+BigInteger& BigInteger::operator *(BigInteger b){
+    BigInteger* result = new BigInteger();
     
-    result.setDigits(simpleMul(this->getDigits(), b.getDigits()));
-    result.setNonNegative(this->isNonnegative() == b.isNonnegative());
+    result->setDigits(simpleMul(this->getDigits(), b.getDigits()));
+    result->setNonNegative(this->isNonnegative() == b.isNonnegative());
 
-    if (result.isZero()){
-        result.setNonNegative(true);
+    if (result->isZero()){
+        result->setNonNegative(true);
     }
-    return result;
+    return (*result);
 }
 
-BigInteger BigInteger::operator /(BigInteger b){
-    BigInteger result;
+BigInteger& BigInteger::operator /(BigInteger b){
+    BigInteger* result = new BigInteger();
 
-    result.setDigits(simpleDiv(this->getDigits(), b.getDigits()));
-    result.setNonNegative(this->isNonnegative() == b.isNonnegative());
+    result->setDigits(simpleDiv(this->getDigits(), b.getDigits()));
+    result->setNonNegative(this->isNonnegative() == b.isNonnegative());
 
-    if (result.isZero()){
-        result.setNonNegative(true);
+    if (result->isZero()){
+        result->setNonNegative(true);
     }
-    return result;
+    return (*result);
 }
-BigInteger BigInteger::operator %(BigInteger b){
-    BigInteger result;
+BigInteger& BigInteger::operator %(BigInteger b){
+    BigInteger* result = new BigInteger();
 
-    result.setDigits(simpleMod(this->getDigits(), b.getDigits()));
-    result.setNonNegative(this->isNonnegative() == b.isNonnegative());
+    result->setDigits(simpleMod(this->getDigits(), b.getDigits()));
+    result->setNonNegative(this->isNonnegative() == b.isNonnegative());
 
-    if (result.isZero()){
-        result.setNonNegative(true);
+    if (result->isZero()){
+        result->setNonNegative(true);
     }
-    return result;
+    return (*result);
 }
 
-BigInteger BigInteger::operator -(){
-    BigInteger inv;
-    inv.setDigits(this->getDigits());
+BigInteger& BigInteger::operator -(){
+    BigInteger* inv = new BigInteger();
+    inv->setDigits(this->getDigits());
     if(!this->isZero())
-        inv.setNonNegative(!this->isNonnegative());
-    return inv;
+        inv->setNonNegative(!this->isNonnegative());
+    return (*inv);
 }
 
 bool BigInteger::operator >(BigInteger b){
@@ -258,8 +258,8 @@ istream& operator>>(istream& inp, BigInteger &b){
 
 
 vector<BYTE> BigInteger::fillLeftZeros(vector<BYTE> n, int size){
-    
-    for(int i = 0; i < size - n.size(); i++){
+    int n_size = n.size();
+    for(int i = 0; i < size - n_size; i++){
         n.push_back(0);
     }
     return n;
@@ -269,7 +269,7 @@ vector<BYTE> BigInteger::removeLeftZeros(vector<BYTE> n){
     bool zero = true;
     
     while (n.size() > 1 && n[n.size()-1] == 0){
-        n.erase(n.begin());
+        n.pop_back();
     }
 
     return n;
@@ -294,6 +294,8 @@ vector<BYTE> BigInteger::simpleSum(vector<BYTE> a, vector<BYTE> b){
 
 vector<BYTE> BigInteger::simpleSub(vector<BYTE> gr, vector<BYTE> sm){
     vector<BYTE> result;
+    sm = fillLeftZeros(sm, gr.size());
+    
 
     int borrow = 0;
     for (int i = 0; i < gr.size(); i++){
@@ -373,8 +375,9 @@ BYTE BigInteger::oneDigitQuocient(vector<BYTE> n, vector<BYTE> d){
     bool found = false;
     int i;
     for (i = 2; i < 10 && !found; i++){
-        if (simpleSm(mulOneDigit(d, i), n)){
+        if (simpleSm(n, mulOneDigit(d, i))){
             found = true;
+            return i-1;
         }
         
     }
@@ -393,13 +396,13 @@ vector<BYTE> BigInteger::simpleDiv(vector<BYTE> n, vector<BYTE> d){
 
     vector<BYTE> m;
     // make m the most sigificant digit of n
-        
-    for (int i = n_size - 1; i >= 0; i++){
+    for (int i = n_size - 1; i >= 0; i--){
         // divide m by d, store the result as most sigificant digit of the result and use the remainder as r
         m.insert(m.begin(), n[i]);
         BYTE q = oneDigitQuocient(m, d);
         result.insert(result.begin(), q);
         m = simpleSub(m,mulOneDigit(d, q));
+        
         // expand r with the next most significant digit of n and use the result as m repeating the previous step
     }
     return removeLeftZeros(result);
@@ -467,13 +470,19 @@ int main(){
     cout<<zero<<" == 0? "<<zero.isZero()<<endl;
     cout<<l2<<" == 0? "<<l2.isZero()<<endl;
 
+    cout<<"L1 previous value = "<<l1<<endl;
+    BigInteger e = l1;
+    l1 = l3;
+    cout<<"e = "<<e<<"; L1 = "<<l1<<endl;
+
+    cout<<l1<<" + "<<s5<<" = "<<l1 + s5<<endl;
+    cout<<l5<<" - "<<l2<<" = "<<l5 - l2<<endl;
+    cout<<s3<<" * "<<s1<<" = "<<s3 * s1<<endl;
+    cout<<s2<<" / "<<s5<<" = "<<s2 / s5<<endl;
+    cout<<s1<<" % "<<s4<<" = "<<s1 % s4<<endl;
+    cout<<" - "<<l4<<" = "<<-l4<<endl;
     /*
 
-    void operator = (BigInteger b);
-
-    BigInteger operator +(BigInteger b);
-    BigInteger operator -(BigInteger b);
-    BigInteger operator *(BigInteger b);
     BigInteger operator /(BigInteger b);
     BigInteger operator %(BigInteger b);
     
