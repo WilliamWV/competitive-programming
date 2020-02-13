@@ -481,21 +481,17 @@ int main(){
     cout<<s2<<" / "<<s5<<" = "<<s2 / s5<<endl;
     cout<<s1<<" % "<<s4<<" = "<<s1 % s4<<endl;
     cout<<" - "<<l4<<" = "<<-l4<<endl;
-    /*
+    
+    cout<<l1<<" > "<<l2<<" = "<<(l1>l2)<<endl;
+    cout<<l4<<" >= "<<s2<<" = "<<(l4>=s2)<<endl;
+    cout<<l5<<" <= "<<s4<<" = "<<(l5<=s4)<<endl;
+    cout<<s4<<" < "<<l3<<" = "<<(s4<l3)<<endl;
+    cout<<l2<<" == "<<s3<<" = "<<(l2==s3)<<endl;
+    cout<<s1<<" != "<<s5<<" = "<<(s1!=s5)<<endl;
+    
+    cout<<"Enter a biginteger: ";
+    BigInteger inp;
+    cin>>inp;
+    cout<<inp<<" + "<<l3<<" = "<<inp+l3<<endl;
 
-    BigInteger operator /(BigInteger b);
-    BigInteger operator %(BigInteger b);
-    
-    BigInteger operator -();
-
-    bool operator >(BigInteger b);
-    bool operator <(BigInteger b);
-    bool operator >=(BigInteger b);
-    bool operator <=(BigInteger b);
-    bool operator ==(BigInteger b);
-    bool operator !=(BigInteger b);
-    
-    friend std::istream& operator>>(std::istream& inp, BigInteger &b);
-    
-    */
 }
