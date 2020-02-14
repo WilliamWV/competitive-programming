@@ -74,25 +74,3 @@ void deallocate_all()
 		free(aux);
 	}
 }
-
-/*
-int main(){
-    int* p1 = (int*) allocate(sizeof(int));
-    double* p2 = (double*) allocate(sizeof(double));
-    char* p3 = (char*) allocate(sizeof(char));
-    std::vector<int>* p4 = (std::vector<int>*) allocate(sizeof(std::vector<int>));
-    unsigned long long* p5 = (unsigned long long*) allocate(sizeof(unsigned long long));
-    std::string* p6 = (std::string*) allocate(sizeof(std::string));
-    int* p7 = (int*) allocate(sizeof(int));
-    int* p8 = (int*) allocate(sizeof(int));
-    int* p9 = (int*) allocate(sizeof(int));
-    int* p10 = (int*) allocate(sizeof(int));
-
-    deallocate_all();
-
-    // To test this run with valgrind ex: 
-    // g++ -O2 -o mm mm.cpp
-    // valgrind --leak-check=yes ./mm
-
-}
-*/
