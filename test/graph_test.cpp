@@ -1,5 +1,4 @@
 #include "../include/graph.h"
-#include "test.h"
 
 using namespace std;
 
@@ -49,6 +48,6 @@ int test_graph(){
 
     deallocate_all();
 
-    return OK;
+    return 0;
 
 }

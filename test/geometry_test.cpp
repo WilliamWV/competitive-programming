@@ -1,5 +1,4 @@
 #include "../include/geometry.h"
-#include "test.h"
 
 using namespace std;
 
@@ -126,6 +125,6 @@ int test_geometry(){
         print_point(ch[i]);
     }
 
-    return OK;
+    return 0;
     
 }

@@ -4,8 +4,5 @@
 !*.*
 # Ignore vscode stuff
 .vscode
-# Ignore cmake stuff except the CMakeLists.txt
-CMakeFiles
-CMakeCache.txt
-*.cmake
-
+# Ignore cmake stuff stored at build file
+build

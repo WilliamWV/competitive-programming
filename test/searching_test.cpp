@@ -1,5 +1,4 @@
 #include "../include/searching.h"
-#include "test.h"
 #include <gtest/gtest.h>
 
 using namespace std;
@@ -47,13 +46,4 @@ TEST(LinearSearchTest, ElementPresent){
     ASSERT_EQ(3, linear_search(u3, 56));
     ASSERT_EQ(5, linear_search(u2, -9));
     
-}
-
-int test_searching(){
-    return OK;
-}
-
-int main(int argc, char **argv){
-    testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
 }

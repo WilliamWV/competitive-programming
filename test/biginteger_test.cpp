@@ -1,5 +1,4 @@
 #include "../include/biginteger.h"
-#include "test.h"
 
 using namespace std;
 
@@ -82,4 +81,6 @@ int test_geometry(){
     BigInteger inp;
     cin>>inp;
     cout<<inp<<" + "<<l3<<" = "<<inp+l3<<endl;
+
+    return 0;
 }

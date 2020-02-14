@@ -1,5 +1,4 @@
 #include "../include/sorting.h"
-#include "test.h"
 
 using namespace std;
 
@@ -33,5 +32,4 @@ int test_sorting(){
     sort(v5);
     print_vec(v5, "Final vector");
 
-    return OK;
 }

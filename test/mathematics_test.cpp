@@ -1,5 +1,4 @@
 #include "../include/mathematics.h"
-#include "test.h"
 
 using namespace std;
 
@@ -43,5 +42,5 @@ int test_mathematics(){
 
     cout<<endl<<"57th prime: "<<nth_prime(57)<<endl;
 
-    return OK;
+    return 0;
 }
