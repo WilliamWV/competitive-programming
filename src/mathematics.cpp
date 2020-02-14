@@ -1,4 +1,4 @@
-#include "mathematics.h"
+#include "../include/mathematics.h"
 
 using namespace std;
 

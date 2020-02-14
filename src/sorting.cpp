@@ -1,4 +1,4 @@
-#include "sorting.h"
+#include "../include/sorting.h"
 
 using namespace std;
 

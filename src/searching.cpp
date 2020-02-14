@@ -1,4 +1,4 @@
-#include "searching.h"
+#include "../include/searching.h"
 
 using namespace std;
 
