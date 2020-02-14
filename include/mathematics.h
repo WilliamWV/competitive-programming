@@ -1,3 +1,6 @@
+#ifndef MATHEMATICS_H
+#define MATHEMATICS_H
+
 #include <iostream>
 #include <vector>
 #include <string>
@@ -18,3 +21,4 @@ std::vector<ULL> first_n_primes(int n);
 
 ULL nth_prime(int n);
 
+#endif

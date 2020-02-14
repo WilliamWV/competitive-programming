@@ -1,3 +1,6 @@
+#ifndef MM_H
+#define MM_H
+
 #include <cstdlib>
 
 // Define a linked list of pointers
@@ -11,3 +14,5 @@ void* allocate(size_t s);
 void* reallocate(void* ptr, size_t size);
 
 void deallocate_all();
+
+#endif

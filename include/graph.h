@@ -1,3 +1,6 @@
+#ifndef GRAPH_H
+#define GRAPH_H
+
 #include <iostream>
 #include <algorithm>
 #include <vector>
@@ -56,3 +59,5 @@ int kruskal_cost(Graph* graph);
 Graph* mst(Graph* graph);
 
 std::vector<std::vector<int>> floyd_warshall(Graph* graph);
+
+#endif

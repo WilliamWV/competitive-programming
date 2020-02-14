@@ -1,4 +1,5 @@
-
+#ifndef GEOMETRY_H
+#define GEOMETRY_H
 
 #include <iostream>
 #include <vector>
@@ -49,3 +50,4 @@ void print_point(Point* p);
 
 void print_line(Line* l);
 
+#endif
