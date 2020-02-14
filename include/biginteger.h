@@ -1,3 +1,6 @@
+#ifndef BIG_INTEGER_H
+#define BIG_INTEGER_H
+
 #include <iostream>
 #include <vector>
 #include <string>
@@ -69,3 +72,4 @@ public:
 
 };
 
+#endif
