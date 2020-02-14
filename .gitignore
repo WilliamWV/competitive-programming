@@ -1,1 +1,11 @@
+# Ignore all
+*
+# Unignore all with extensions (this will not include executable files)
+!*.*
+# Ignore vscode stuff
 .vscode
+# Ignore cmake stuff except the CMakeLists.txt
+CMakeFiles
+CMakeCache.txt
+*.cmake
+
