@@ -5,6 +5,8 @@ include_directories(${GTEST_INCLUDE_DIRS})
 
 add_executable(searchTest test/test_runner.cpp test/searching_test.cpp src/searching.cpp)
 add_executable(sortTest test/test_runner.cpp test/sorting_test.cpp src/sorting.cpp)
+add_executable(globalTest test/test_runner.cpp test/searching_test.cpp src/searching.cpp test/sorting_test.cpp src/sorting.cpp)
 
 target_link_libraries(searchTest ${GTEST_LIBRARIES} pthread)
 target_link_libraries(sortTest ${GTEST_LIBRARIES} pthread)
+target_link_libraries(globalTest ${GTEST_LIBRARIES} pthread)

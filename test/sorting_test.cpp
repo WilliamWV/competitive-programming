@@ -72,7 +72,7 @@ TEST(MergesortTest, MSTest){
 
 TEST(BublesortTest, BSTest){
     reinitVectors();
-    
+
     bubblesort(u1);
     bubblesort(u2);
     bubblesort(u3);
@@ -84,4 +84,23 @@ TEST(BublesortTest, BSTest){
     ASSERT_TRUE(vectorCompare(o3, u3));
     ASSERT_TRUE(vectorCompare(o4, u4));
     ASSERT_TRUE(vectorCompare(o5, u5));
+}
+
+TEST(IssortedTest, sorted){
+    ASSERT_TRUE(is_sorted(o1));
+    ASSERT_TRUE(is_sorted(o2));
+    ASSERT_TRUE(is_sorted(o3));
+    ASSERT_TRUE(is_sorted(o4));
+    ASSERT_TRUE(is_sorted(o5));
+}
+
+TEST(IssortedTest, unsorted){
+    reinitVectors();
+    
+    ASSERT_FALSE(is_sorted(u1));
+    ASSERT_TRUE(is_sorted(u2)); // single element vector
+    ASSERT_FALSE(is_sorted(u3));
+    ASSERT_FALSE(is_sorted(u4));
+    ASSERT_FALSE(is_sorted(u5));
+    
 }

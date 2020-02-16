@@ -12,6 +12,8 @@ void quicksort(std::vector<int> &arr);
 
 void bubblesort(std::vector<int> &arr);
 
+bool is_sorted(std::vector<int> &arr);
+
 void sort(std::vector<int> &arr);
 
 #endif
