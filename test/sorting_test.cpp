@@ -1,4 +1,5 @@
 #include "../include/sorting.h"
+#include "../include/util.h"
 #include <gtest/gtest.h>
 
 using namespace std;
@@ -14,19 +15,6 @@ vector<int> o2 = {4};
 vector<int> o3 = {-13, -12, -1, 0, 0, 0, 0, 1, 2, 2, 2, 4, 4, 4, 6, 6, 6, 7, 9, 10, 14, 23, 87, 876};
 vector<int> o4 = {-1, 0, 1, 2, 4, 6, 7, 9, 10};
 vector<int> o5 = {-4, -1, -1, -1, -1, -1, 0, 2};
-
-template <typename T>
-bool vectorCompare(vector<T> &v1, vector<T> &v2){
-    if (v1.size() != v2.size()){
-        return false;
-    } 
-    for (int i = 0; i < v1.size(); i++){
-        if (v1[i] != v2[i]){ 
-            return false;
-        }
-    }
-    return true;
-}
 
 void reinitVectors(){
     u1 = {4, 6, 2, 1, 6, 7, 2, 9, 10, -1, 0, 4, 6};
