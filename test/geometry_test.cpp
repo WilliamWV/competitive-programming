@@ -1,130 +1,74 @@
 #include "../include/geometry.h"
+#include <gtest/gtest.h>
 
 using namespace std;
 
-int test_geometry(){
-    Point* p1 = create_point(0,0);
-    Point* p2 = create_point(1,1);
-    Point* p3 = create_point(2,2);
-    Point* p4 = create_point(1,2);
-    Point* p5 = create_point(0,5);
-    Point* p6 = create_point(1,6);
-    Point* p7 = create_point(7,2);
-    Point* p8 = create_point(-1,2);
-    Point* p9 = create_point(4,-3);
-    Point* p10 = create_point(-2,-1);
-    Point* p11 = create_point(0,-4);
+Point* p0_0 = create_point(0, 0);
+Point* p0_1 = create_point(0, 1);
+Point* p1_0 = create_point(1, 0);
+Point* p1_1 = create_point(1, 1);
+Point* p0_m1 = create_point(0, -1);
+Point* pm1_0 = create_point(-1, 0);
+Point* pm1_m1 = create_point(-1, -1);
+Point* p2_3 = create_point(2, 3);
+Point* pm2_3 = create_point(-2, 3);
+Point* p7_m1 = create_point(7, -1);
+Point* pm9_2 = create_point(-9, 2);
+Point* p4_0 = create_point(4, 0);
+Point* p3_6 = create_point(3, 6);
+Point* p4_m7 = create_point(4, -7);
+Point* pm3_m4 = create_point(-3, -4);
+Point* p2_2 = create_point(2, 2);
+Point* pm1_m8 = create_point(-1, -8);
+Point* pm9_5 = create_point(-9, 5);
+Point* pm3_3 = create_point(-3, 3);
+Point* p9_2 = create_point(9, 2);
+Point* pm7_8 = create_point(-7, 8);
+
+Line* l1 = create_line(p0_0, p1_1);
+Line* l2 = create_line(p1_1, p2_2, true);
+Line* l3 = create_line(pm1_m1, p0_0, true);
+Line* l4 = create_line(pm1_m8, p3_6);
+
+TEST(GetEquationTest, GetEquationTest){
+    Line_equation* l1_eq = get_equation(l1);
+    Line_equation* l2_eq = get_equation(l2);
+    Line_equation* l3_eq = get_equation(l3);
+    Line_equation* l4_eq = get_equation(l4);
     
+    ASSERT_DOUBLE_EQ(1, l1_eq->a);
+    ASSERT_DOUBLE_EQ(0, l1_eq->b);
 
-    Line* l1 = create_line(p4, p9, false);
-    Line* l2 = create_line(p2, p5, true);
-    Line* l3 = create_line(p1, p3, false);
+    ASSERT_DOUBLE_EQ(1, l2_eq->a);
+    ASSERT_DOUBLE_EQ(0, l2_eq->b);
 
-    cout<<"Distance between points"<<endl;
-    print_point(p1);
-    print_point(p4);
-    cout<<"Equal to: "<<distance(p1, p4)<<endl;
-    
-    cout<<"Distance between points"<<endl;
-    print_point(p3);
-    print_point(p7); 
-    cout<<"Equal to: "<<distance(p3, p7)<<endl;
-    
-    cout<<"Distance between points"<<endl;
-    print_point(p6);
-    print_point(p9);
-    
-    cout<<"Equal to: "<<distance(p6, p9)<<endl;
-    
-    Point* pr = create_point(1, 0);
-    cout<<"Rotating point: "<<endl;
-    print_point(pr);
-    cout<<"By 90 degrees"<<endl;
-    rotate_point(pr, M_PI_2);
-    cout<<"Result is:"<<endl;
-    print_point(pr);
+    ASSERT_DOUBLE_EQ(1, l3_eq->a);
+    ASSERT_DOUBLE_EQ(0, l3_eq->b);
 
-    cout<<endl<<"Checking intersection between lines "<<endl;
-    print_line(l1);
-    print_line(l2);
+    ASSERT_DOUBLE_EQ(7.0/2.0, l4_eq->a);
+    ASSERT_DOUBLE_EQ(-4.5, l4_eq->b);
+}
 
-    if(intersect(l1, l2)){ 
-        cout<< "Intersect at"<<endl; 
-        print_point(intersection(l1, l2)); 
-    }
-    else{
-        cout<< "Does not intersect";
-    }
-
-    cout<<endl<<"Checking intersection between lines "<<endl;
-    print_line(l1);
-    print_line(l3);
-
-    if(intersect(l1, l3)){
-        cout<< "Intersect at"<<endl; 
-        print_point(intersection(l1, l3));
-    }
-    else{
-        cout<< "Does not intersect";
-    }
-
-    cout<<endl<<"Checking intersection between lines "<<endl;
-    print_line(l2);
-    print_line(l3);
-
-    if (intersect(l2, l3)) {
-        cout<< "Intersect at"<<endl; 
-        print_point(intersection(l2, l3)); 
-    }
-    else {
-        cout<<"Does not intersect"<<endl;
-    }
-
-    cout<<endl<<"Checking if line contains point "<<endl;
-    print_line(l3);
-
-    if (contains_point(l3, p2)){ 
-        cout<<"Contains"<<endl;
-        print_point(p2);
-    }
-    else{
-        cout<<"Does not contains"<<endl;
-        print_point(p2);
-    }
-
-    cout<<endl<<"Checking if line contains point "<<endl;
-    print_line(l2);
-    
-    Point* po = create_point(-1,9);
-    
-    if (contains_point(l2, po)){ 
-        cout<<"Contains"<<endl;
-        print_point(po);
-    } else{
-        cout<<"Does not contains"<<endl;
-        print_point(po);
-    }
-
-    cout<<"Distance between point: "<<endl;
-    print_point(p5);
-    cout<<"And:"<<endl;
-    print_line(l1);
-    cout<<"Equals to: "<<line_point_distance(l1, p5)<<endl;
-
-    
-    vector<Point*> points = {p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11};
-    
-    vector<Point*> ch = convex_hull(points);
-    cout<<"Convex hull of points:"<<endl;
-    for (int i = 0; i< points.size(); i++){
-        print_point(points[i]);
-    }
-
-    cout<<endl<<"Is:"<<endl;
-    for (int i = 0; i< ch.size(); i++){
-        print_point(ch[i]);
-    }
-
-    return 0;
+TEST(PointDistanceTest, PointDistanceTest){
+    ASSERT_DOUBLE_EQ(1, distance(p0_0, p0_1));
+    ASSERT_DOUBLE_EQ(sqrt(10), distance(p1_1, p4_0));
+    ASSERT_DOUBLE_EQ(sqrt(52), distance(p0_m1, p4_m7));
+    ASSERT_DOUBLE_EQ(sqrt(17), distance(p3_6, p2_2));
+    ASSERT_DOUBLE_EQ(sqrt(37), distance(p1_0, p7_m1));
+    ASSERT_DOUBLE_EQ(sqrt(292), distance(pm7_8, p9_2));
+    ASSERT_DOUBLE_EQ(sqrt(125), distance(pm1_m8, pm3_3));
+    ASSERT_DOUBLE_EQ(sqrt(333), distance(pm9_5, p9_2));
     
 }
+
+//void rotate_point(Point* p1, double angle);
+
+//bool intersect(Line* l1, Line* l2);
+
+//Point* intersection(Line* l1, Line* l2);
+
+//bool contains_point(Line* l, Point* p);
+
+//double line_point_distance(Line* l, Point* p);
+
+//std::vector<Point*> convex_hull(std::vector<Point*> points);
