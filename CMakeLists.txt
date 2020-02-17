@@ -4,9 +4,11 @@ find_package(GTest REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
 
 add_executable(searchTest test/test_runner.cpp test/searching_test.cpp src/searching.cpp)
-add_executable(sortTest test/test_runner.cpp test/sorting_test.cpp src/sorting.cpp)
-add_executable(globalTest test/test_runner.cpp test/searching_test.cpp src/searching.cpp test/sorting_test.cpp src/sorting.cpp)
+add_executable(sortTest test/test_runner.cpp test/sorting_test.cpp src/sorting.cpp src/util.cpp)
+add_executable(mathTest test/test_runner.cpp test/mathematics_test.cpp src/mathematics.cpp src/util.cpp)
+add_executable(globalTest test/test_runner.cpp test/searching_test.cpp src/searching.cpp test/sorting_test.cpp src/sorting.cpp src/util.cpp test/mathematics_test.cpp src/mathematics.cpp)
 
 target_link_libraries(searchTest ${GTEST_LIBRARIES} pthread)
 target_link_libraries(sortTest ${GTEST_LIBRARIES} pthread)
+target_link_libraries(mathTest ${GTEST_LIBRARIES} pthread)
 target_link_libraries(globalTest ${GTEST_LIBRARIES} pthread)
