@@ -46,6 +46,8 @@ double line_point_distance(Line* l, Point* p);
 
 std::vector<Point*> convex_hull(std::vector<Point*> points);
 
+bool points_equal(Point* p1, Point* p2);
+
 void print_point(Point* p);
 
 void print_line(Line* l);

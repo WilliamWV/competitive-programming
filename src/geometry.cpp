@@ -204,3 +204,7 @@ void print_line(Line* l){
         cout<<eq->a<<"x + "<<eq->b<<" = y"<<endl;
     }
 }
+
+bool points_equal(Point* p1, Point* p2){
+    return p1->x == p2->x && p1->y == p2->y;
+}
