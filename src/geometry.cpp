@@ -1,5 +1,8 @@
 #include "../include/geometry.h"
 
+#define TOLERANCE 0.00001
+
+
 using namespace std;
 
 Point* create_point(double x, double y){
@@ -29,13 +32,14 @@ double distance(Point* p1, Point* p2){
 }
 
 void rotate_point(Point* p1, double angle){
-    int new_x = p1->x * cos(angle) - p1->y * sin(angle);
-    int new_y = p1->x * sin(angle) + p1->y * cos(angle);
+    double new_x = p1->x * cos(angle) - p1->y * sin(angle);
+    double new_y = p1->x * sin(angle) + p1->y * cos(angle);
     p1->x = new_x;
     p1->y = new_y;
 }
 
 Point* infinite_lines_intersection(Line_equation* l1, Line_equation* l2){
+    
     double cross_x = (l2->b - l1->b) / (l1->a - l2->a);
     double cross_y = l1->a * cross_x + l1->b;
 
@@ -45,10 +49,42 @@ Point* infinite_lines_intersection(Line_equation* l1, Line_equation* l2){
 bool intersect(Line* l1, Line* l2){
     Line_equation* l1_eq = get_equation(l1);
     Line_equation* l2_eq = get_equation(l2);
-    
-    if (l1_eq->a == l2_eq->a && l1_eq->b != l2_eq->b){ //parallell line
-        return false;
+
+    if (l1_eq->a == l2_eq->a){
+        if(l1_eq->b == l2_eq->b){
+            if (l1->finite && l2->finite){
+                double max_x_l1 = l1->a->x;
+                double min_x_l1 = l1->b->x;
+
+                double max_x_l2 = l2->a->x;
+                double min_x_l2 = l2->b->x;
+
+                if (l1->a->x < l1->b->x){
+                    max_x_l1 = l1->b->x;
+                    min_x_l1 = l1->a->x;
+                } 
+
+                if (l2->a->x < l2->b->x){
+                    max_x_l2 = l2->b->x;
+                    min_x_l2 = l2->a->x;
+                } 
+
+                if ((max_x_l2 >= min_x_l1 && min_x_l1 >= min_x_l2) || (max_x_l1 >= min_x_l2 && min_x_l2 >= min_x_l1)){ // both segments intersect 
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+            else{
+                return true;
+            }
+        }
+        else{
+            return false; // parallel line
+        }
     }
+
 
     // point where the lines would intersect if they are infinite lines;
     Point* virtual_cross_point = infinite_lines_intersection(l1_eq, l2_eq);
@@ -61,11 +97,57 @@ Point* intersection(Line* l1, Line* l2){
     Line_equation* l1_eq = get_equation(l1);
     Line_equation* l2_eq = get_equation(l2);
     
-    if (l1_eq->a == l2_eq->a && l1_eq->b != l2_eq->b){ 
-        return NULL;
+    if (l1_eq->a == l2_eq->a){
+        if (l1_eq->b == l2_eq->b){ 
+            if (!l1->finite && ! l2->finite){
+                return l1->a; //any point of the lines would be valid since they are two infinite lines with the same equation
+            }
+            if (!l1->finite && l2->finite){
+                return l2->a; // any point of l2 would be valid since it is a segment of l1
+            }
+            if (l1->finite && !l2->finite){
+                return l1->a; // any point of l2 would be valid since it is a segment of l1
+            }
+            else{
+                double max_x_l1 = l1->a->x;
+                double min_x_l1 = l1->b->x;
+
+                double max_x_l2 = l2->a->x;
+                double min_x_l2 = l2->b->x;
+
+                if (l1->a->x < l1->b->x){
+                    max_x_l1 = l1->b->x;
+                    min_x_l1 = l1->a->x;
+                } 
+
+                if (l2->a->x < l2->b->x){
+                    max_x_l2 = l2->b->x;
+                    min_x_l2 = l2->a->x;
+                } 
+
+                if ((max_x_l2 >= min_x_l1 && min_x_l1 >= min_x_l2) || (max_x_l1 >= min_x_l2 && min_x_l2 >= min_x_l1)){ // both segments intersect 
+                    if ((max_x_l2 >= min_x_l1 && min_x_l1 >= min_x_l2)){
+                        if (l1->a->x < l1->b->x) return l1->a;
+                        else return l1->b;
+                    }
+                    else{
+                        if(l2->a->x < l2->b->x) return l2->a;
+                        else return l2->b;
+                    }
+                }
+                else{
+                    return NULL;
+                }
+            }
+
+        }
+        else{
+            return NULL;
+        }
     }
 
     Point* virtual_cross_point = infinite_lines_intersection(l1_eq, l2_eq);
+
     if ((contains_point(l1, virtual_cross_point) && contains_point(l2, virtual_cross_point))){
         return virtual_cross_point;
     }
@@ -76,14 +158,17 @@ Point* intersection(Line* l1, Line* l2){
 bool contains_point(Line* l, Point* p){
     Line_equation* eq = get_equation(l);
 
-    if (eq->a * p->x + eq->b != p->y)
+    if (abs((eq->a * p->x + eq->b) - p->y) > TOLERANCE){
         return false;
+    }
     else if (l->finite == false)
         return true;
-    else return (
-        p->x <= max(l->a->x, l->b->x) && p->x >= min(l->a->x, l->b->x) && 
-        p->y <= max(l->a->y, l->b->y) && p->y >= min(l->a->y, l->b->y)
-    );
+    else {
+        return (
+            p->x <= max(l->a->x, l->b->x) && p->x >= min(l->a->x, l->b->x) && 
+            p->y <= max(l->a->y, l->b->y) && p->y >= min(l->a->y, l->b->y)
+        );
+    }
 }
 
 double line_point_distance(Line* l, Point* p){
@@ -206,5 +291,5 @@ void print_line(Line* l){
 }
 
 bool points_equal(Point* p1, Point* p2){
-    return p1->x == p2->x && p1->y == p2->y;
+    return abs(p1->x - p2->x) < TOLERANCE && abs(p1->y - p2->y) < TOLERANCE;
 }

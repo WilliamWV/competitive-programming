@@ -25,10 +25,11 @@ Point* pm3_3 = create_point(-3, 3);
 Point* p9_2 = create_point(9, 2);
 Point* pm7_8 = create_point(-7, 8);
 
-Line* l1 = create_line(p0_0, p1_1);
+Line* l1 = create_line(p0_0, p1_1); // y = x
 Line* l2 = create_line(p1_1, p2_2, true);
 Line* l3 = create_line(pm1_m1, p0_0, true);
-Line* l4 = create_line(pm1_m8, p3_6);
+Line* l4 = create_line(pm1_m8, p3_6); // y = 3.5x - 4.5
+Line* l5 = create_line(pm9_5, p4_0); // y = -0.38x + 1.54
 
 TEST(GetEquationTest, GetEquationTest){
     Line_equation* l1_eq = get_equation(l1);
@@ -61,10 +62,80 @@ TEST(PointDistanceTest, PointDistanceTest){
     
 }
 
-//void rotate_point(Point* p1, double angle);
+TEST(RotatePointTest, RotatePointTest){
+    Point* p1 = create_point(0, 1);
 
-//bool intersect(Line* l1, Line* l2);
+    rotate_point(p1, M_PI);
+    ASSERT_TRUE(points_equal(p1, p0_m1));
 
+    rotate_point(p1, -M_PI);
+    ASSERT_TRUE(points_equal(p1, p0_1));
+
+    rotate_point(p1, M_PI_2);
+    ASSERT_TRUE(points_equal(p1, pm1_0));
+
+    rotate_point(p1, M_PI);
+    ASSERT_TRUE(points_equal(p1, p1_0));
+
+    Point* paux = create_point(sqrt(2)/2.0, sqrt(2)/2.0);
+    rotate_point(p1, M_PI_4);
+    ASSERT_TRUE(points_equal(p1, paux));
+
+
+}
+
+TEST(IntersectTest, LinesIntersect){
+    ASSERT_TRUE(intersect(l1, l4));
+    ASSERT_TRUE(intersect(l1, l5));
+    ASSERT_TRUE(intersect(l4, l5));
+    ASSERT_TRUE(intersect(l4, l1));
+    ASSERT_TRUE(intersect(l3, l3));
+    ASSERT_TRUE(intersect(l1, l1));
+    
+
+    ASSERT_TRUE(intersect(l1, l2));
+    ASSERT_TRUE(intersect(l1, l3));
+    ASSERT_TRUE(intersect(l4, l2));
+    ASSERT_TRUE(intersect(l5, l2));
+    
+}
+
+TEST(IntersectTest, LinesDoesNotIntersect){
+    ASSERT_FALSE(intersect(l4, l3));
+    ASSERT_FALSE(intersect(l5, l3));
+
+    ASSERT_FALSE(intersect(l2, l3));
+    ASSERT_FALSE(intersect(l3, l5));
+    
+}
+
+TEST(IntersectionTest, IntersectionTest){
+
+    Point* expected_l1_l4 = create_point(1.8, 1.8);
+    ASSERT_TRUE(points_equal(intersection(l1, l4), expected_l1_l4));
+
+    Point* expected_l1_l5 = create_point(10.0/9.0, 10.0/9.0);
+    ASSERT_TRUE(points_equal(intersection(l1, l5), expected_l1_l5));
+
+    Point* expected_l4_l5 = create_point(157.0/101.0, 190.0/202.0);
+    ASSERT_TRUE(points_equal(intersection(l4, l5), expected_l4_l5));
+    ASSERT_TRUE(points_equal(intersection(l4, l1), expected_l1_l4));
+
+    ASSERT_TRUE(points_equal(intersection(l3, l3), l3->a));
+    ASSERT_TRUE(points_equal(intersection(l1, l1), l1->a));
+    
+
+    ASSERT_TRUE(points_equal(intersection(l1, l2), l2->a));
+    ASSERT_TRUE(points_equal(intersection(l1, l3), l3->a));
+    ASSERT_TRUE(points_equal(intersection(l4, l2), expected_l1_l4));
+
+    ASSERT_EQ(intersection(l4, l3), nullptr);
+    ASSERT_TRUE(points_equal(intersection(l5, l2), expected_l1_l5));
+    ASSERT_EQ(intersection(l5, l3), nullptr);
+
+    ASSERT_EQ(intersection(l2, l3), nullptr);
+    ASSERT_EQ(intersection(l3, l5), nullptr);
+}
 //Point* intersection(Line* l1, Line* l2);
 
 //bool contains_point(Line* l, Point* p);
