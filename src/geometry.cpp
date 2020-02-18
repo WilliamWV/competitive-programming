@@ -173,11 +173,38 @@ bool contains_point(Line* l, Point* p){
 
 double line_point_distance(Line* l, Point* p){
     Line_equation* eq = get_equation(l);
+    
     double a = eq->a;
     double b = -1;
     double c = eq->b;
 
-    return abs(a * p->x + b * p->y + c)/sqrt(a * a + b * b);
+    double infinite_line_dist = abs(a * p->x + b * p->y + c)/sqrt(a * a + b * b);
+
+    if (!l->finite) return infinite_line_dist;
+    else{
+        Point* mini = l->a;
+        Point* maxi = l->b;
+        if (l->a->x > l->b->x){
+            mini = l->b;
+            maxi = l->a;
+        }
+        double delta = 0.01;
+
+        Point* delta_mini = create_point(mini->x - delta, (mini->x - delta) * eq->a + eq->b);
+        Point* delta_maxi = create_point(maxi->x + delta, (maxi->x + delta) * eq->a + eq->b);
+
+        double distance_mini = distance(mini, p);
+        double distance_maxi = distance(maxi, p);
+
+        double dmini = (distance_mini - distance(delta_mini, p))/ delta;
+        double dmaxi = (distance_maxi - distance(delta_maxi, p))/ delta;
+
+        if (dmini < 0 && dmaxi < 0){ // the minimum distance is inside this line segment
+            return infinite_line_dist;
+        }
+        else return min(distance_maxi, distance_mini);
+
+    }
 }
 
 void swap(vector<Point*> &arr, int i, int j){

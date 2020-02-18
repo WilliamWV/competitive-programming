@@ -136,10 +136,56 @@ TEST(IntersectionTest, IntersectionTest){
     ASSERT_EQ(intersection(l2, l3), nullptr);
     ASSERT_EQ(intersection(l3, l5), nullptr);
 }
-//Point* intersection(Line* l1, Line* l2);
 
-//bool contains_point(Line* l, Point* p);
+TEST(ContainsPointTest, ContainsPoint){
+    ASSERT_TRUE(contains_point(l1, p0_0));
+    ASSERT_TRUE(contains_point(l1, p1_1));
+    ASSERT_TRUE(contains_point(l1, p2_2));
+    ASSERT_TRUE(contains_point(l1, pm1_m1));
+    
+    Point* p15 = create_point(1.5, 1.5);
+    Point* p05 = create_point(-0.5, -0.5);
 
+    ASSERT_TRUE(contains_point(l2, p15));
+    ASSERT_TRUE(contains_point(l3, p05));
+    
+    Point* p11 = create_point(1.0, -1.0);
+    
+    ASSERT_TRUE(contains_point(l4, p11));
+    ASSERT_TRUE(contains_point(l5, p4_0));
+
+}
+
+TEST(ContainsPointTest, DoesNotContainsPoint){
+    ASSERT_FALSE(contains_point(l2, p0_0));
+    ASSERT_FALSE(contains_point(l3, p2_2));
+
+    ASSERT_FALSE(contains_point(l1, p0_1));
+    ASSERT_FALSE(contains_point(l1, p3_6));
+    ASSERT_FALSE(contains_point(l1, p4_m7));
+    ASSERT_FALSE(contains_point(l4, p0_0));
+    ASSERT_FALSE(contains_point(l4, p2_3));
+    ASSERT_FALSE(contains_point(l4, p7_m1));
+    ASSERT_FALSE(contains_point(l5, p2_2));
+    ASSERT_FALSE(contains_point(l5, p9_2));
+    ASSERT_FALSE(contains_point(l5, pm3_m4));
+   
+}
+
+TEST(LinePointDistanceTest, LinePointDistanceTest){
+    ASSERT_DOUBLE_EQ(0.0, line_point_distance(l1, p0_0));
+    ASSERT_DOUBLE_EQ(11.0 * sqrt(2.0) / 2.0, line_point_distance(l1, p4_m7));
+    ASSERT_DOUBLE_EQ(sqrt(2.0) / 2.0, line_point_distance(l1, p0_1));
+    ASSERT_DOUBLE_EQ(sqrt(17), line_point_distance(l2, p3_6));
+    ASSERT_DOUBLE_EQ(sqrt(50), line_point_distance(l3, p7_m1));
+    ASSERT_DOUBLE_EQ(sqrt(53) / 53.0, line_point_distance(l4, p2_3));
+    ASSERT_DOUBLE_EQ(0.0, line_point_distance(l4, pm1_m8));
+    ASSERT_DOUBLE_EQ(42 * sqrt(53) / 53.0, line_point_distance(l4, p7_m1));
+    ASSERT_DOUBLE_EQ(51 * sqrt(194) / 194.0, line_point_distance(l5, p9_2));
+    ASSERT_DOUBLE_EQ(129 * sqrt(194) / 194.0, line_point_distance(l5, pm1_m8));
+    ASSERT_DOUBLE_EQ(0.0, line_point_distance(l5, pm9_5));
+    
+}
 //double line_point_distance(Line* l, Point* p);
 
 //std::vector<Point*> convex_hull(std::vector<Point*> points);
