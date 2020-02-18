@@ -186,6 +186,41 @@ TEST(LinePointDistanceTest, LinePointDistanceTest){
     ASSERT_DOUBLE_EQ(0.0, line_point_distance(l5, pm9_5));
     
 }
-//double line_point_distance(Line* l, Point* p);
+
+bool vectorEqual(vector<Point*> v1, vector<Point*> v2){
+    if (v1.size() != v2.size()) {
+        return false;
+    }
+
+    bool found = false;
+    for (int i = 0; i < v1.size(); i++){
+        found = false;
+        for (int j = 0; j < v2.size() && !found; j++){
+            if (points_equal(v2[j], v1[i])){
+                found = true;
+            }
+        }
+        if(!found){
+            return false;
+        }
+    }
+    return true;
+}
+
+TEST(ConvexHullTest, ConvexHullTest){
+    vector<Point*> unitary = {p0_0, p0_1, p1_0, pm1_0, p0_m1, p1_1, pm1_m1};
+    vector<Point*> big_set = {
+        p0_0, p0_1, p1_0, p1_1, p0_m1, pm1_0, pm1_m1, p2_3, 
+        p7_m1, pm9_2, p4_0, p3_6, p4_m7, pm3_m4, p2_2, pm1_m8,
+        pm9_5, pm3_3, p9_2, pm7_8
+    };
+
+    vector<Point*> expected_unit = {p0_1, p1_0, pm1_0, p0_m1, p1_1, pm1_m1};
+    vector<Point*> expected_big = {pm9_2, p3_6, p4_m7, pm1_m8, pm9_5, p9_2, pm7_8};
+
+    ASSERT_TRUE(vectorEqual(expected_unit, convex_hull(unitary)));
+    ASSERT_TRUE(vectorEqual(expected_big, convex_hull(big_set)));
+    
+}
 
 //std::vector<Point*> convex_hull(std::vector<Point*> points);

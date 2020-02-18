@@ -240,10 +240,14 @@ bool angle_cmp(Point* p1, Point* p2){
 // 0 -> colinear points
 // -1 -> counterclockwise (convex polygon)
 int orientation(Point* p1, Point* p2, Point* p3){
-    int value = (p2->y - p1->y) * (p3->x - p2->x) - 
+    double value = (p2->y - p1->y) * (p3->x - p2->x) - 
                 (p2->x - p1->x) * (p3->y - p2->y);
+    print_point(p1);
+    print_point(p2);
+    print_point(p3);
+    cout<<"Value = "<<value<<" if > 0 CLOCKWISE"<<endl;
     
-    if (value == 0) return COLINEAR;
+    if (abs(value) < TOLERANCE) return COLINEAR;
     return (value > 0)? CLOCKWISE : COUNTERCLOCKWISE;
 }
 
@@ -287,7 +291,7 @@ vector<Point*> convex_hull(vector<Point*> points){
 
     int ch_points = 3;
     for (int i = 3; i < single_angles.size(); i++){
-        while (orientation(ch[ch_points-2], ch[ch_points-1], points[i]) == CLOCKWISE){
+        while (orientation(ch[ch_points-2], ch[ch_points-1], single_angles[i]) == CLOCKWISE){
             ch.pop_back();
             ch_points--;
         }
