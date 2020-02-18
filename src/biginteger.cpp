@@ -25,6 +25,9 @@ void BigInteger::setFromString(string num){
     digits = removeLeftZeros(digits);
     
     this->setDigits(digits);
+    if(this->absolute().isZero()){
+        this->setNonNegative(true); // avoid -0
+    }
 }
 
 BigInteger::BigInteger(){
@@ -40,9 +43,14 @@ BigInteger::BigInteger(LL num){
     this->setNonNegative(num >= 0);
     
     num = abs(num);
-    while (num > 0){
-        digits.push_back( (BYTE) num%10);
-        num/=10;
+    if (num == 0){
+        digits.push_back((BYTE) 0);
+    }
+    else{
+        while (num > 0){
+            digits.push_back( (BYTE) num%10);
+            num/=10;
+        }
     }
     this->setDigits(digits);
 }
@@ -225,6 +233,7 @@ bool BigInteger::operator <=(BigInteger b){
 }
 
 bool BigInteger::operator ==(BigInteger b){
+
     if(this->isNonnegative() != b.isNonnegative()) return false;
 
     vector<BYTE> this_digs = this->getDigits();
@@ -241,6 +250,8 @@ bool BigInteger::operator ==(BigInteger b){
 bool BigInteger::operator !=(BigInteger b){
     return !((*this) == b);
 }
+
+bool BigInteger::operator ==(const BigInteger b) const{ return fromConst(*this) == fromConst(b);}
 
 
 ostream& operator<<(ostream& out, BigInteger &b){
@@ -411,4 +422,11 @@ vector<BYTE> BigInteger::simpleDiv(vector<BYTE> n, vector<BYTE> d){
 vector<BYTE> BigInteger::simpleMod(vector<BYTE> n, vector<BYTE> d){
     vector<BYTE> q = simpleDiv(n, d);
     return (simpleSub(n, simpleMul(d, q)));
+}
+
+BigInteger BigInteger::fromConst(const BigInteger other) const{
+    BigInteger non_const;
+    non_const.setNonNegative(other.m_nonnegative);
+    non_const.setDigits(other.m_digits);
+    return non_const;
 }

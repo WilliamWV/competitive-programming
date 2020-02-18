@@ -34,22 +34,107 @@ TEST(BigIntegerConstructorTest, LongIntTest){
     
 }
 
-//bool isNonnegative();
-//std::string toString();
-//std::vector<BYTE> getDigits();
-//BigInteger& absolute();
-//bool isZero();
+TEST(isNegativeTest, isNegativeTest){
+    BigInteger n1 = 12;
+    BigInteger n2 = 0;
+    BigInteger n3 = -938;
+    BigInteger n4 = 920391;
+    BigInteger n5 = 7382;
+    BigInteger n6 = -9382;
+    BigInteger n7 = -0;
+    BigInteger n8 = -9283;
 
+    BigInteger s1("0");
+    BigInteger s2("-0");
+    BigInteger s3("3892638263928320938207323");
+    BigInteger s4("-989383273920302392836283");
+    BigInteger s5("-1");
+    
+    ASSERT_TRUE(n1.isNonnegative());
+    ASSERT_TRUE(n2.isNonnegative());
+    ASSERT_FALSE(n3.isNonnegative());
+    ASSERT_TRUE(n4.isNonnegative());
+    ASSERT_TRUE(n5.isNonnegative());
+    ASSERT_FALSE(n6.isNonnegative());
+    ASSERT_TRUE(n7.isNonnegative());
+    ASSERT_FALSE(n8.isNonnegative());
+    ASSERT_TRUE(s1.isNonnegative());
+    ASSERT_TRUE(s2.isNonnegative());
+    ASSERT_TRUE(s3.isNonnegative());
+    ASSERT_FALSE(s4.isNonnegative());
+    ASSERT_FALSE(s5.isNonnegative());
+    
+}
+
+TEST(toStringTest, toStringTest){
+    BigInteger two = 2;
+    BigInteger minus10 = -10;
+
+    BigInteger bigNumber("2839200293828329379832892937868263823");
+    BigInteger zero("0");
+
+    ASSERT_EQ(two.toString(), "2");
+    ASSERT_EQ(minus10.toString(), "-10");
+    ASSERT_EQ(bigNumber.toString(), "2839200293828329379832892937868263823");
+    ASSERT_EQ(zero.toString(), "0");
+    
+}
+
+TEST(absoluteTest, absoluteTest){
+    BigInteger two = 2;
+    BigInteger zero = 0;
+    BigInteger minus2 = -2;
+    BigInteger four = 4;
+    BigInteger minus8 = -8;
+    BigInteger minus1 = -1;
+    BigInteger minus5 = -5;
+    
+    BigInteger minus0("-0");
+
+    ASSERT_EQ(minus0.absolute(), zero);
+    ASSERT_EQ(two.absolute(), (BigInteger) 2);
+    ASSERT_EQ(zero.absolute(), (BigInteger) 0);
+    ASSERT_EQ(minus2.absolute(), (BigInteger) 2);
+    ASSERT_EQ(four.absolute(), (BigInteger) 4);
+    ASSERT_EQ(minus8.absolute(), (BigInteger) 8);
+    ASSERT_EQ(minus1.absolute(), (BigInteger) 1);
+    ASSERT_EQ(minus5.absolute(), (BigInteger) 5);
+    
+}
+
+TEST(isZeroTest, isZeroTest){
+    BigInteger z1 = 0;
+    BigInteger z2 = -0;
+    BigInteger z3("0");
+    BigInteger z4("-0");
+
+    BigInteger n1 = 9382;
+    BigInteger n2 = 972;
+    BigInteger n3 = 837;
+    BigInteger n4 = 2;
+    BigInteger n5 = 927;
+    BigInteger n6 = 123;
+    BigInteger n7 = -9;
+    BigInteger n8("12818267312531726351267351867318267531826735");
+    BigInteger n9("-12818267312531726351267351867318267531826735");
+    
+    ASSERT_TRUE(z1.isZero());
+    ASSERT_TRUE(z2.isZero());
+    ASSERT_TRUE(z3.isZero());
+    ASSERT_TRUE(z4.isZero());
+    
+    ASSERT_FALSE(n1.isZero());
+    ASSERT_FALSE(n2.isZero());
+    ASSERT_FALSE(n3.isZero());
+    ASSERT_FALSE(n4.isZero());
+    ASSERT_FALSE(n5.isZero());
+    ASSERT_FALSE(n6.isZero());
+    ASSERT_FALSE(n7.isZero());
+    ASSERT_FALSE(n8.isZero());
+    ASSERT_FALSE(n9.isZero());
+}
 
 //void operator = (BigInteger b);
-
-//BigInteger& operator +(BigInteger b);
-//BigInteger& operator -(BigInteger b);
-//BigInteger& operator *(BigInteger b);
-//BigInteger& operator /(BigInteger b);
-//BigInteger& operator %(BigInteger b);
-
-//BigInteger& operator -();
 
 //bool operator >(BigInteger b);
 //bool operator <(BigInteger b);
@@ -57,6 +142,13 @@ TEST(BigIntegerConstructorTest, LongIntTest){
 //bool operator <=(BigInteger b);
 //bool operator ==(BigInteger b);
 //bool operator !=(BigInteger b);
+
+//BigInteger& operator +(BigInteger b);
+//BigInteger& operator -(BigInteger b);
+//BigInteger& operator *(BigInteger b);
+//BigInteger& operator /(BigInteger b);
+//BigInteger& operator %(BigInteger b);
+//BigInteger& operator -();
 
 //friend std::ostream& operator<<(std::ostream& out, BigInteger &b);
 //friend std::istream& operator>>(std::istream& inp, BigInteger &b); 

@@ -15,7 +15,7 @@ private:
     // where a number such as 240 would become: number[0] = 0; number[1] = 4; number[2] = 2
     std::vector<BYTE> m_digits;
     bool m_nonnegative;
-    
+
     void setDigits(std::vector<BYTE> digs);
     void setNonNegative(bool nn);
     void setFromString(std::string num);
@@ -34,6 +34,8 @@ private:
     std::vector<BYTE> fillLeftZeros(std::vector<BYTE> n, int size);
     std::vector<BYTE> removeLeftZeros(std::vector<BYTE> n);
     
+    BigInteger fromConst(const BigInteger other) const;
+
     
 
 public:
@@ -66,6 +68,8 @@ public:
     bool operator <=(BigInteger b);
     bool operator ==(BigInteger b);
     bool operator !=(BigInteger b);
+
+    bool operator ==(const BigInteger b) const;
     
     friend std::ostream& operator<<(std::ostream& out, BigInteger &b);
     friend std::istream& operator>>(std::istream& inp, BigInteger &b);    
