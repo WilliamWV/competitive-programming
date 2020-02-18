@@ -180,6 +180,14 @@ BigInteger& BigInteger::operator -(){
     return (*inv);
 }
 
+
+BigInteger& BigInteger::operator +(const BigInteger b) const {return fromConst(*this) + fromConst(b);}
+BigInteger& BigInteger::operator -(const BigInteger b) const {return fromConst(*this) - fromConst(b);}
+BigInteger& BigInteger::operator *(const BigInteger b) const {return fromConst(*this) * fromConst(b);}
+BigInteger& BigInteger::operator /(const BigInteger b) const {return fromConst(*this) / fromConst(b);}
+BigInteger& BigInteger::operator %(const BigInteger b) const {return fromConst(*this) % fromConst(b);}
+BigInteger& BigInteger::operator -() const {return -fromConst(*this);}
+
 bool BigInteger::operator >(BigInteger b){
     if (this->isNonnegative() != b.isNonnegative()){
         return this->isNonnegative();
@@ -252,6 +260,11 @@ bool BigInteger::operator !=(BigInteger b){
 }
 
 bool BigInteger::operator ==(const BigInteger b) const{ return fromConst(*this) == fromConst(b);}
+bool BigInteger::operator >=(const BigInteger b) const{ return fromConst(*this) >= fromConst(b);}
+bool BigInteger::operator <=(const BigInteger b) const{ return fromConst(*this) <= fromConst(b);}
+bool BigInteger::operator >(const BigInteger b) const{ return fromConst(*this) > fromConst(b);}
+bool BigInteger::operator <(const BigInteger b) const{ return fromConst(*this) < fromConst(b);}
+bool BigInteger::operator !=(const BigInteger b) const{ return fromConst(*this) != fromConst(b);}
 
 
 ostream& operator<<(ostream& out, BigInteger &b){

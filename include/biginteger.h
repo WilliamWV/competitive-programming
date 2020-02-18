@@ -59,8 +59,15 @@ public:
     BigInteger& operator *(BigInteger b);
     BigInteger& operator /(BigInteger b);
     BigInteger& operator %(BigInteger b);
-    
     BigInteger& operator -();
+
+    BigInteger& operator +(const BigInteger b) const ;
+    BigInteger& operator -(const BigInteger b) const ;
+    BigInteger& operator *(const BigInteger b) const ;
+    BigInteger& operator /(const BigInteger b) const ;
+    BigInteger& operator %(const BigInteger b) const ;
+    BigInteger& operator -() const ;
+
 
     bool operator >(BigInteger b);
     bool operator <(BigInteger b);
@@ -69,10 +76,16 @@ public:
     bool operator ==(BigInteger b);
     bool operator !=(BigInteger b);
 
+    bool operator >(const BigInteger b) const;
+    bool operator <(const BigInteger b) const;
+    bool operator >=(const BigInteger b) const;
+    bool operator <=(const BigInteger b) const;
     bool operator ==(const BigInteger b) const;
+    bool operator !=(const BigInteger b) const;
+    
     
     friend std::ostream& operator<<(std::ostream& out, BigInteger &b);
-    friend std::istream& operator>>(std::istream& inp, BigInteger &b);    
+    friend std::istream& operator>>(std::istream& inp, BigInteger &b); 
 
 };
 
