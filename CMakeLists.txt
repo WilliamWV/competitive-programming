@@ -7,6 +7,7 @@ add_executable(searchTest test/test_runner.cpp test/searching_test.cpp src/searc
 add_executable(sortTest test/test_runner.cpp test/sorting_test.cpp src/sorting.cpp src/util.cpp)
 add_executable(mathTest test/test_runner.cpp test/mathematics_test.cpp src/mathematics.cpp src/util.cpp)
 add_executable(geoTest test/test_runner.cpp test/geometry_test.cpp src/geometry.cpp src/mm.cpp)
+add_executable(bigIntegerTest test/test_runner.cpp test/biginteger_test.cpp src/biginteger.cpp)
 add_executable(globalTest test/test_runner.cpp test/searching_test.cpp src/searching.cpp test/sorting_test.cpp src/sorting.cpp src/util.cpp test/mathematics_test.cpp src/mathematics.cpp test/geometry_test.cpp src/geometry.cpp src/mm.cpp)
 
 
@@ -14,4 +15,5 @@ target_link_libraries(searchTest ${GTEST_LIBRARIES} pthread)
 target_link_libraries(sortTest ${GTEST_LIBRARIES} pthread)
 target_link_libraries(mathTest ${GTEST_LIBRARIES} pthread)
 target_link_libraries(geoTest ${GTEST_LIBRARIES} pthread)
+target_link_libraries(bigIntegerTest ${GTEST_LIBRARIES} pthread)
 target_link_libraries(globalTest ${GTEST_LIBRARIES} pthread)
