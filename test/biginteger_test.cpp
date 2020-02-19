@@ -134,14 +134,147 @@ TEST(isZeroTest, isZeroTest){
     ASSERT_FALSE(n9.isZero());
 }
 
-//void operator = (BigInteger b);
+TEST(assignOpTest, assignOpTest){
+    BigInteger n1 = 928374;
+    BigInteger n2("83829130937283231");
 
-//bool operator >(BigInteger b);
-//bool operator <(BigInteger b);
-//bool operator >=(BigInteger b);
-//bool operator <=(BigInteger b);
-//bool operator ==(BigInteger b);
-//bool operator !=(BigInteger b);
+    n1 = n2;
+
+    ASSERT_EQ(n1.toString(), "83829130937283231");
+    ASSERT_EQ(n2.toString(), "83829130937283231");
+    
+}
+
+TEST(cmpOpTest, greaterTest){
+    BigInteger n1 = 928392;
+    BigInteger n2 = 973163;
+    BigInteger n3 = -625372;
+    BigInteger n4 = 123723;
+    BigInteger n5("123723");
+    BigInteger n6("7561173581723517653167531725310938172936172");
+
+    ASSERT_TRUE(n2 > n1);
+    ASSERT_TRUE(n1 > n3);
+    ASSERT_TRUE(n4 > n3);
+    ASSERT_TRUE(n2 > n4);
+    ASSERT_TRUE(n6 > n2);
+    ASSERT_TRUE(n5 > n3);
+
+    ASSERT_FALSE(n4 > n5);
+    ASSERT_FALSE(n5 > n4);
+    ASSERT_FALSE(n1 > n6);
+    ASSERT_FALSE(n3 > n1);
+}
+
+TEST(CmpOpTest, smallerTest){
+    BigInteger n1 = 928392;
+    BigInteger n2 = 973163;
+    BigInteger n3 = -625372;
+    BigInteger n4 = 123723;
+    BigInteger n5("123723");
+    BigInteger n6("7561173581723517653167531725310938172936172");
+
+    ASSERT_FALSE(n2 < n1);
+    ASSERT_FALSE(n1 < n3);
+    ASSERT_FALSE(n4 < n3);
+    ASSERT_FALSE(n2 < n4);
+    ASSERT_FALSE(n6 < n2);
+    ASSERT_FALSE(n5 < n3);
+
+    ASSERT_FALSE(n4 < n5);
+    ASSERT_FALSE(n5 < n4);
+    
+    ASSERT_TRUE(n1 < n6);
+    ASSERT_TRUE(n3 < n1);
+}
+
+TEST(CmpOpTest, greaterEqTest){
+    BigInteger n1 = 928392;
+    BigInteger n2 = 973163;
+    BigInteger n3 = -625372;
+    BigInteger n4 = 123723;
+    BigInteger n5("123723");
+    BigInteger n6("7561173581723517653167531725310938172936172");
+
+    ASSERT_TRUE(n2 >= n1);
+    ASSERT_TRUE(n1 >= n3);
+    ASSERT_TRUE(n4 >= n3);
+    ASSERT_TRUE(n2 >= n4);
+    ASSERT_TRUE(n6 >= n2);
+    ASSERT_TRUE(n5 >= n3);
+
+    ASSERT_TRUE(n4 >= n5);
+    ASSERT_TRUE(n5 >= n4);
+    
+    ASSERT_FALSE(n1 >= n6);
+    ASSERT_FALSE(n3 >= n1);
+}
+
+TEST(CmpOpTest, smallerEqTest){
+    BigInteger n1 = 928392;
+    BigInteger n2 = 973163;
+    BigInteger n3 = -625372;
+    BigInteger n4 = 123723;
+    BigInteger n5("123723");
+    BigInteger n6("7561173581723517653167531725310938172936172");
+
+    ASSERT_FALSE(n2 <= n1);
+    ASSERT_FALSE(n1 <= n3);
+    ASSERT_FALSE(n4 <= n3);
+    ASSERT_FALSE(n2 <= n4);
+    ASSERT_FALSE(n6 <= n2);
+    ASSERT_FALSE(n5 <= n3);
+
+    ASSERT_TRUE(n4 <= n5);
+    ASSERT_TRUE(n5 <= n4);
+    
+    ASSERT_TRUE(n1 <= n6);
+    ASSERT_TRUE(n3 <= n1);
+}
+
+TEST(CmpOpTest, equalTest){
+    BigInteger n1 = 928392;
+    BigInteger n2 = 973163;
+    BigInteger n3 = -625372;
+    BigInteger n4 = 123723;
+    BigInteger n5("123723");
+    BigInteger n6("7561173581723517653167531725310938172936172");
+
+    ASSERT_FALSE(n2 == n1);
+    ASSERT_FALSE(n1 == n3);
+    ASSERT_FALSE(n4 == n3);
+    ASSERT_FALSE(n2 == n4);
+    ASSERT_FALSE(n6 == n2);
+    ASSERT_FALSE(n5 == n3);
+
+    ASSERT_TRUE(n4 == n5);
+    ASSERT_TRUE(n5 == n4);
+    
+    ASSERT_FALSE(n1 == n6);
+    ASSERT_FALSE(n3 == n1);
+}
+
+TEST(CmpOpTest, NeqTest){
+    BigInteger n1 = 928392;
+    BigInteger n2 = 973163;
+    BigInteger n3 = -625372;
+    BigInteger n4 = 123723;
+    BigInteger n5("123723");
+    BigInteger n6("7561173581723517653167531725310938172936172");
+
+    ASSERT_TRUE(n2 != n1);
+    ASSERT_TRUE(n1 != n3);
+    ASSERT_TRUE(n4 != n3);
+    ASSERT_TRUE(n2 != n4);
+    ASSERT_TRUE(n6 != n2);
+    ASSERT_TRUE(n5 != n3);
+
+    ASSERT_FALSE(n4 != n5);
+    ASSERT_FALSE(n5 != n4);
+    
+    ASSERT_TRUE(n1 != n6);
+    ASSERT_TRUE(n3 != n1);
+}
 
 //BigInteger& operator +(BigInteger b);
 //BigInteger& operator -(BigInteger b);

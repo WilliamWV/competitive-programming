@@ -242,10 +242,6 @@ bool angle_cmp(Point* p1, Point* p2){
 int orientation(Point* p1, Point* p2, Point* p3){
     double value = (p2->y - p1->y) * (p3->x - p2->x) - 
                 (p2->x - p1->x) * (p3->y - p2->y);
-    print_point(p1);
-    print_point(p2);
-    print_point(p3);
-    cout<<"Value = "<<value<<" if > 0 CLOCKWISE"<<endl;
     
     if (abs(value) < TOLERANCE) return COLINEAR;
     return (value > 0)? CLOCKWISE : COUNTERCLOCKWISE;

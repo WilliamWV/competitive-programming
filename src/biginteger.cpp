@@ -37,7 +37,6 @@ BigInteger::BigInteger(){
     
 
 BigInteger::BigInteger(LL num){
-    
     vector<BYTE> digits;
     
     this->setNonNegative(num >= 0);
@@ -48,7 +47,7 @@ BigInteger::BigInteger(LL num){
     }
     else{
         while (num > 0){
-            digits.push_back( (BYTE) num%10);
+            digits.push_back( (BYTE) (num%10));
             num/=10;
         }
     }
@@ -211,7 +210,7 @@ bool BigInteger::operator >(BigInteger b){
 
 }
 bool BigInteger::operator <(BigInteger b){
-    return b >= (*this);
+    return b > (*this);
 }
 
 bool BigInteger::operator >=(BigInteger b){
@@ -237,7 +236,7 @@ bool BigInteger::operator >=(BigInteger b){
 
 }
 bool BigInteger::operator <=(BigInteger b){
-    return b > (*this);
+    return b >= (*this);
 }
 
 bool BigInteger::operator ==(BigInteger b){
