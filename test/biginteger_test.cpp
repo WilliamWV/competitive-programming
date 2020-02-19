@@ -276,12 +276,110 @@ TEST(CmpOpTest, NeqTest){
     ASSERT_TRUE(n3 != n1);
 }
 
-//BigInteger& operator +(BigInteger b);
-//BigInteger& operator -(BigInteger b);
-//BigInteger& operator *(BigInteger b);
-//BigInteger& operator /(BigInteger b);
-//BigInteger& operator %(BigInteger b);
-//BigInteger& operator -();
+TEST(ArithmeticTest, SumTest){
+    BigInteger n20 = 20;
+    BigInteger n2 = 2;
+    BigInteger n1 = 1;
+    BigInteger n5 = 5;
+    BigInteger n_5 = -5;
+    BigInteger n_10 = -10;
 
-//friend std::ostream& operator<<(std::ostream& out, BigInteger &b);
-//friend std::istream& operator>>(std::istream& inp, BigInteger &b); 
+    ASSERT_EQ(n20 + n2, (BigInteger) 22);
+    ASSERT_EQ(n2 + n_10, (BigInteger) -8);
+    ASSERT_EQ(n20 + n_5, (BigInteger) 15);
+    ASSERT_EQ(n_10 + n2, (BigInteger) -8);
+    ASSERT_EQ(n_5 + n20, (BigInteger) 15);
+    ASSERT_EQ(n1 + n2, (BigInteger) 3);
+    ASSERT_EQ(n_10 + n_5, (BigInteger) -15);
+    
+}
+
+TEST(ArithmeticTest, SubTest){
+    BigInteger n20 = 20;
+    BigInteger n2 = 2;
+    BigInteger n1 = 1;
+    BigInteger n5 = 5;
+    BigInteger n_5 = -5;
+    BigInteger n_10 = -10;
+
+    ASSERT_EQ(n20 - n2, (BigInteger) 18);
+    ASSERT_EQ(n2 - n_10, (BigInteger) 12);
+    ASSERT_EQ(n20 - n_5, (BigInteger) 25);
+    ASSERT_EQ(n_10 - n2, (BigInteger) -12);
+    ASSERT_EQ(n_5 - n20, (BigInteger) -25);
+    ASSERT_EQ(n1 - n2, (BigInteger) -1);
+    ASSERT_EQ(n_10 - n_5, (BigInteger) -5);
+    
+}
+
+TEST(ArithmeticTest, MulTest){
+    BigInteger n20 = 20;
+    BigInteger n2 = 2;
+    BigInteger n1 = 1;
+    BigInteger n5 = 5;
+    BigInteger n_5 = -5;
+    BigInteger n_10 = -10;
+
+    ASSERT_EQ(n20 * n2, (BigInteger) 40);
+    ASSERT_EQ(n2 * n_10, (BigInteger) -20);
+    ASSERT_EQ(n20 * n_5, (BigInteger) -100);
+    ASSERT_EQ(n_10 * n2, (BigInteger) -20);
+    ASSERT_EQ(n_5 * n20, (BigInteger) -100);
+    ASSERT_EQ(n1 * n2, (BigInteger) 2);
+    ASSERT_EQ(n_10 * n_5, (BigInteger) 50);
+    
+}
+
+TEST(ArithmeticTest, DivTest){
+    BigInteger n20 = 20;
+    BigInteger n2 = 2;
+    BigInteger n1 = 1;
+    BigInteger n5 = 5;
+    BigInteger n_5 = -5;
+    BigInteger n_10 = -10;
+
+    ASSERT_EQ(n20 / n2, (BigInteger) 10);
+    ASSERT_EQ(n2 / n_10, (BigInteger) 0);
+    ASSERT_EQ(n20 / n_5, (BigInteger) -4);
+    ASSERT_EQ(n_10 / n2, (BigInteger) -5);
+    ASSERT_EQ(n_5 / n20, (BigInteger) 0);
+    ASSERT_EQ(n2 / n1, (BigInteger) 2);
+    ASSERT_EQ(n_10 / n_5, (BigInteger) 2);
+    
+}
+
+TEST(ArithmeticTest, ModTest){
+    BigInteger n20 = 20;
+    BigInteger n2 = 2;
+    BigInteger n1 = 1;
+    BigInteger n5 = 5;
+    BigInteger n_5 = -5;
+    BigInteger n_10 = -10;
+
+    ASSERT_EQ(n20 % n2, (BigInteger) 0);
+    ASSERT_EQ(n2 % n_10, (BigInteger) 2);
+    ASSERT_EQ(n20 % n_5, (BigInteger) 0);
+    ASSERT_EQ(n_10 % n2, (BigInteger) 0);
+    ASSERT_EQ(n_5 % n20, (BigInteger) -5);
+    ASSERT_EQ(n1 % n2, (BigInteger) 1);
+    ASSERT_EQ(n_10 % n_5, (BigInteger) 0);
+    
+}
+
+TEST(ArithmeticTest, InvTest){
+    BigInteger n20 = 20;
+    BigInteger n2 = 2;
+    BigInteger n1 = 1;
+    BigInteger n5 = 5;
+    BigInteger n_5 = -5;
+    BigInteger n_10 = -10;
+
+    ASSERT_EQ(- n20, (BigInteger) -20);
+    ASSERT_EQ(- n2, (BigInteger) -2);
+    ASSERT_EQ(- n1, (BigInteger) -1);
+    ASSERT_EQ(- n5, (BigInteger) -5);
+    ASSERT_EQ(- n_5, (BigInteger) 5);
+    ASSERT_EQ(- n_10, (BigInteger) 10);
+    
+}
+

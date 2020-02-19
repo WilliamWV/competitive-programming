@@ -163,7 +163,7 @@ BigInteger& BigInteger::operator %(BigInteger b){
     BigInteger* result = new BigInteger();
 
     result->setDigits(simpleMod(this->getDigits(), b.getDigits()));
-    result->setNonNegative(this->isNonnegative() == b.isNonnegative());
+    result->setNonNegative(this->isNonnegative());
 
     if (result->isZero()){
         result->setNonNegative(true);
