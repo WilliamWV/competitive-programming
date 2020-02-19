@@ -61,25 +61,18 @@ void print_graph(Graph* graph){
 }
 
 
-void dfs(Graph* graph, int src){
+vector<int> dfs(Graph* graph, int src){
     stack<int> node_stack;
     vector<bool> visited_nodes (graph->nodes, false);
-    bool first_node = true;
-    cout<<"Navigating through the graph with DFS: "<<endl;
+    vector<int> answer;
+
     node_stack.push(src);
     while (!node_stack.empty()){
         int current_node = node_stack.top(); 
         node_stack.pop();
         if (!visited_nodes[current_node]){
             visited_nodes[current_node] = true;
-            if (!first_node){
-                cout<<" - ";
-            }
-            else{
-                first_node = false;
-            }
-            cout<<current_node;
-
+            answer.push_back(current_node);
             for (int i = 0; i < graph->nodes; i++){
                 if (graph->graph[current_node][i] < INT_MAX && !visited_nodes[i]){
                     node_stack.push(i);
@@ -87,30 +80,23 @@ void dfs(Graph* graph, int src){
             }
         }
     }
-    cout<<endl;
+    return answer;
 }
 
 
-void bfs(Graph* graph, int src){
+vector<int> bfs(Graph* graph, int src){
     
+    vector<int> answer;
     queue<int> node_queue;
     vector<bool> visited_nodes (graph->nodes, false);
-    bool first_node = true;
     
-    cout<<"Navigating through the graph with BFS: "<<endl;
     node_queue.push(src);
     while (!node_queue.empty()){
         int current_node = node_queue.front(); 
         node_queue.pop();
         if (!visited_nodes[current_node]){ // needs to recheck because the node can reapear due to a cycle
             visited_nodes[current_node] = true;
-            if (first_node){
-                first_node = false;
-            }
-            else{
-                cout<<" - ";
-            }
-            cout<<current_node;
+            answer.push_back(current_node);
             for (int i = 0; i < graph->nodes; i++){
                 if (graph->graph[current_node][i] < INT_MAX && !visited_nodes[i]){
                     node_queue.push(i);
@@ -118,7 +104,7 @@ void bfs(Graph* graph, int src){
             }
         }
     }
-    cout<<endl;
+    return answer;
 }
 
 

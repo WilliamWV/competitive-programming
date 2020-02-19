@@ -42,9 +42,9 @@ void rm_edge(Graph* graph, int src, int dst);
 
 void print_graph(Graph* graph);
 
-void dfs(Graph* graph, int src);
+std::vector<int> dfs(Graph* graph, int src);
 
-void bfs(Graph* graph, int src);
+std::vector<int> bfs(Graph* graph, int src);
 
 // The graph must not contain negative weight edges
 int dijkstra(Graph* graph, int src, int dst);
