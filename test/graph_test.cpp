@@ -102,9 +102,81 @@ TEST(bfsTest, bfsTest){
     
 }
 
-//void dfs(Graph* graph, int src);
-//void bfs(Graph* graph, int src);
-// The graph must not contain negative weight edges
+TEST(dijkstraTest, nodesDistance){
+    if(!graph_ready) init_test_graphs();
+
+    ASSERT_EQ(3, dijkstra(g1, 0, 6));
+    ASSERT_EQ(19, dijkstra(g1, 4, 8));
+    ASSERT_EQ(10, dijkstra(g1, 3, 6));
+    ASSERT_EQ(7, dijkstra(g1, 2, 7));
+    ASSERT_EQ(9, dijkstra(g1, 1, 3));
+    ASSERT_EQ(9, dijkstra(g1, 4, 2));
+    ASSERT_EQ(14, dijkstra(g1, 5, 8));
+    ASSERT_EQ(9, dijkstra(g1, 7, 5));
+    
+    ASSERT_EQ(INT_MAX, dijkstra(g2, 2, 0));
+    ASSERT_EQ(2, dijkstra(g2, 0, 2));
+    ASSERT_EQ(2, dijkstra(g2, 4, 5));
+    ASSERT_EQ(1, dijkstra(g2, 1, 5));
+    ASSERT_EQ(3, dijkstra(g2, 3, 2));
+    
+}
+
+TEST(dijkstraTest, allDistances){
+    if(!graph_ready) init_test_graphs();
+
+    vector<int> expected_g1_from_0 = {0, 2, 1, 7, 8, 3, 3, 6, 11};
+    vector<int> actual_g1_from_0 = complete_dijkstra(g1, 0);
+
+    vector<int> expected_g1_from_3 = {7, 9, 8, 0, 1, 4, 10, 13, 18};
+    vector<int> actual_g1_from_3 = complete_dijkstra(g1, 3);
+    
+    vector<int> expected_g1_from_6 = {3, 1, 4, 10, 11, 6, 0, 5, 14};
+    vector<int> actual_g1_from_6 = complete_dijkstra(g1, 6);
+    
+    vector<int> expected_g2_from_1 = {INT_MAX, 0, 1, INT_MAX, INT_MAX, 1};
+    vector<int> actual_g2_from_1 = complete_dijkstra(g2, 1);
+    
+    vector<int> expected_g2_from_4 = {2, 3, 4, 1, 0, 2};
+    vector<int> actual_g2_from_4 = complete_dijkstra(g2, 4);
+    
+    ASSERT_TRUE(vectorCompare(actual_g1_from_0, expected_g1_from_0));
+    ASSERT_TRUE(vectorCompare(actual_g1_from_3, expected_g1_from_3));
+    ASSERT_TRUE(vectorCompare(actual_g1_from_6, expected_g1_from_6));
+    ASSERT_TRUE(vectorCompare(actual_g2_from_1, expected_g2_from_1));
+    ASSERT_TRUE(vectorCompare(actual_g2_from_4, expected_g2_from_4));
+
+}
+
+TEST(dijkstraTest, dijkstraTree){
+    if(!graph_ready) init_test_graphs();
+
+    Graph* actual_g1_dijkstra_from_0 = dijkstra_graph(g1, 0);
+    Graph* expected_g1_dijkstra_from_0;
+    expected_g1_dijkstra_from_0 = init_graph(9);
+    add_arc(expected_g1_dijkstra_from_0, 0, 1, 2);
+    add_arc(expected_g1_dijkstra_from_0, 0, 2, 1);
+    add_arc(expected_g1_dijkstra_from_0, 0, 5, 3);
+    add_arc(expected_g1_dijkstra_from_0, 0, 8, 11);
+    add_arc(expected_g1_dijkstra_from_0, 1, 6, 1);
+    add_arc(expected_g1_dijkstra_from_0, 1, 7, 4);
+    add_arc(expected_g1_dijkstra_from_0, 5, 3, 4);
+    add_arc(expected_g1_dijkstra_from_0, 3, 4, 1);
+    
+    Graph* actual_g2_dijkstra_from_3 = dijkstra_graph(g2, 3);
+    Graph* expected_g2_dijkstra_from_3;
+    expected_g2_dijkstra_from_3 = init_graph(6);
+    add_arc(expected_g2_dijkstra_from_3, 3, 0, 1);
+    add_arc(expected_g2_dijkstra_from_3, 3, 5, 1);
+    add_arc(expected_g2_dijkstra_from_3, 0, 1, 1);
+    add_arc(expected_g2_dijkstra_from_3, 1, 2, 1);
+    
+    ASSERT_TRUE(graphsEqual(actual_g1_dijkstra_from_0, expected_g1_dijkstra_from_0));
+    ASSERT_TRUE(graphsEqual(actual_g2_dijkstra_from_3, expected_g2_dijkstra_from_3));
+    
+
+}
+
 //int dijkstra(Graph* graph, int src, int dst);
 //std::vector<int> complete_dijkstra(Graph* graph, int src);
 //Graph* dijkstra_graph(Graph* graph, int src);

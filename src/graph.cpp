@@ -135,7 +135,7 @@ int dijkstra(Graph* graph, int src, int dst){
         }
     }
     if (!visited[dst]){//unreachable
-        return -1;
+        return INT_MAX;
     }
     return dists[dst];
 
@@ -341,4 +341,15 @@ vector<vector<int>> floyd_warshall(Graph* graph){
         }
     }
     return dist;
+}
+
+bool graphsEqual(Graph* g1, Graph* g2){
+    if(g1->nodes != g2->nodes) return false;
+
+    for (int i = 0; i < g1->nodes; i++){
+        for (int j = 0; j < g1->nodes; j++){
+            if(g1->graph[i][j] != g2->graph[i][j]) return false;
+        }
+    }
+    return true;
 }

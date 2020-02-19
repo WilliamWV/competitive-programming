@@ -60,4 +60,6 @@ Graph* mst(Graph* graph);
 
 std::vector<std::vector<int>> floyd_warshall(Graph* graph);
 
+bool graphsEqual(Graph* g1, Graph* g2);
+
 #endif
