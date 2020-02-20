@@ -177,10 +177,63 @@ TEST(dijkstraTest, dijkstraTree){
 
 }
 
-//int dijkstra(Graph* graph, int src, int dst);
-//std::vector<int> complete_dijkstra(Graph* graph, int src);
-//Graph* dijkstra_graph(Graph* graph, int src);
-// May only work when the graph is undirected
-//int kruskal_cost(Graph* graph);
-//Graph* mst(Graph* graph);
-//std::vector<std::vector<int>> floyd_warshall(Graph* graph);
+TEST(MSTTest, KruskalTest){
+    ASSERT_EQ(27, kruskal_cost(g1));
+}
+
+TEST(MSTTest, MSTTest){
+    Graph* actual_g1_mst = mst(g1);
+    Graph* expected_g1_mst;
+    expected_g1_mst = init_graph(9);
+    add_edge(expected_g1_mst, 0, 1, 2);
+    add_edge(expected_g1_mst, 0, 2, 1);
+    add_edge(expected_g1_mst, 0, 5, 3);
+    add_edge(expected_g1_mst, 0, 8, 11);
+    add_edge(expected_g1_mst, 1, 7, 4);
+    add_edge(expected_g1_mst, 1, 6, 1);
+    add_edge(expected_g1_mst, 3, 4, 1);
+    add_edge(expected_g1_mst, 5, 3, 4);
+    
+    ASSERT_TRUE(graphsEqual(actual_g1_mst, expected_g1_mst));
+
+}
+
+bool matEqual(vector<vector<int>> v1, vector<vector<int>> v2){
+    if (v1.size() != v2.size()) return false;
+    for (int i = 0; i < v1.size(); i++){
+        if(v1[i].size() != v2[i].size()) return false;
+        for (int j = 0; j < v1[i].size(); j++){
+            if(v1[i][j] != v2[i][j]) return false;
+        }
+    }
+    return true;
+}
+
+TEST(FloydWarshallTest, FloydWarshallTest){
+    vector<vector<int>> actual_fw_g1 = floyd_warshall(g1);
+    vector<vector<int>> expected_fw_g1 = {
+        {0, 2, 1, 7, 8, 3, 3, 6, 11},
+        {2, 0, 3, 9, 10, 5, 1, 4, 13},
+        {1, 3, 0, 8, 9, 4, 4, 7, 12},
+        {7, 9, 8, 0, 1, 4, 10, 13, 18},
+        {8, 10, 9, 1, 0, 5, 11, 14, 19},
+        {3, 5, 4, 4, 5, 0, 6, 9, 14},
+        {3, 1, 4, 10, 11, 6, 0, 5, 14},
+        {6, 4, 7, 13, 14, 9, 5, 0, 17},
+        {11, 13, 12, 18, 19, 14, 14, 17, 0}
+    };
+
+    vector<vector<int>> actual_fw_g2 = floyd_warshall(g2);
+    vector<vector<int>> expected_fw_g2 = {
+        {0, 1, 2, INT_MAX, INT_MAX, 2},
+        {INT_MAX, 0, 1, INT_MAX, INT_MAX, 1},
+        {INT_MAX, INT_MAX, 0, INT_MAX, INT_MAX, INT_MAX},
+        {1, 2, 3, 0, INT_MAX, 1},
+        {2, 3, 4, 1, 0, 2},
+        {INT_MAX, INT_MAX, INT_MAX, INT_MAX, INT_MAX, 0},
+        
+    };
+    
+    ASSERT_TRUE(matEqual(actual_fw_g1, expected_fw_g1));
+    ASSERT_TRUE(matEqual(actual_fw_g2, expected_fw_g2));
+}
