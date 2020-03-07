@@ -92,3 +92,45 @@ TEST(IssortedTest, unsorted){
     ASSERT_FALSE(is_sorted(u5));
     
 }
+
+TEST(InsertSortedTest, IndexTest){
+    
+    ASSERT_EQ(0, insert_sorted_index(o1, -1));
+    ASSERT_EQ(11, insert_sorted_index(o1, 9));
+
+    //Both values are correct once 4 appear twice
+    ASSERT_TRUE(5 == insert_sorted_index(o1, 4)||6 == insert_sorted_index(o1, 4));
+    ASSERT_EQ(13, insert_sorted_index(o1, 11));
+    ASSERT_EQ(1, insert_sorted_index(o1, 0));
+    
+}
+
+TEST(InsertSortedTest, InsertTest){
+    
+    int previous_size = o1.size();
+    insert_sorted(o1, 1);
+    ASSERT_TRUE(is_sorted(o1));
+    ASSERT_EQ(previous_size + 1, o1.size());
+    
+    previous_size = o2.size();
+    insert_sorted(o2, 10);
+    ASSERT_TRUE(is_sorted(o2));
+    ASSERT_EQ(previous_size + 1, o2.size());
+    
+    previous_size = o1.size();
+    insert_sorted(o1, 3);
+    ASSERT_TRUE(is_sorted(o1));
+    ASSERT_EQ(previous_size + 1, o1.size());
+    
+    previous_size = o1.size();
+    insert_sorted(o1, -9);
+    ASSERT_TRUE(is_sorted(o1));
+    ASSERT_EQ(previous_size + 1, o1.size());
+    
+    previous_size = o1.size();
+    insert_sorted(o1, 2);
+    ASSERT_TRUE(is_sorted(o1));
+    ASSERT_EQ(previous_size + 1, o1.size());
+    
+
+}
