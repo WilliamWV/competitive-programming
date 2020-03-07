@@ -5,5 +5,10 @@ jobs:
      - image: wwvargas/g_test:0.0.1
    steps:
      - checkout
-     - run: echo "Testing the test"
+     - run: 
+        name: Building code
+        command: 'mkdir build && cd build && cmake .. && make'
+     - run:
+        name: Running tests
+        command: './globalTest'
    
