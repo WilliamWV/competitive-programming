@@ -96,3 +96,27 @@ bool is_sorted(vector<int> &arr){
 void sort(vector<int> &arr){
     mergesort(arr);
 }
+
+int insert_sorted_index(std::vector<int> &arr, int element){
+    int l = 0;
+    int h = arr.size();
+    while (h > l){
+        int m = l + (h - l) / 2;
+        if (arr[m] == element) return m;
+        if (arr[m] > element){
+            h = m;
+        }
+        else{
+            l = m + 1;
+        }
+    }
+    return l;
+
+}
+
+void insert_sorted(std::vector<int> &arr, int element){
+    
+    int index = insert_sorted_index(arr, element);
+    arr.insert(arr.begin() + index, element);
+
+}

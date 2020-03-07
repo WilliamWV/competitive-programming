@@ -11,7 +11,6 @@ add_executable(bigIntegerTest test/test_runner.cpp test/biginteger_test.cpp src/
 add_executable(graphTest test/test_runner.cpp test/graph_test.cpp src/graph.cpp src/mm.cpp src/util.cpp)
 add_executable(globalTest test/test_runner.cpp test/searching_test.cpp src/searching.cpp test/sorting_test.cpp src/sorting.cpp src/util.cpp test/mathematics_test.cpp src/mathematics.cpp test/geometry_test.cpp src/geometry.cpp test/biginteger_test src/biginteger.cpp src/mm.cpp test/graph_test.cpp src/graph.cpp)
 
-
 target_link_libraries(searchTest ${GTEST_LIBRARIES} pthread)
 target_link_libraries(sortTest ${GTEST_LIBRARIES} pthread)
 target_link_libraries(mathTest ${GTEST_LIBRARIES} pthread)

@@ -16,4 +16,8 @@ bool is_sorted(std::vector<int> &arr);
 
 void sort(std::vector<int> &arr);
 
+int insert_sorted_index(std::vector<int> &arr, int element);
+
+void insert_sorted(std::vector<int> &arr, int element);
+
 #endif
