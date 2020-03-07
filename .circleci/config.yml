@@ -10,5 +10,5 @@ jobs:
         command: 'mkdir build && cd build && cmake .. && make'
      - run:
         name: Running tests
-        command: './globalTest'
+        command: './build/globalTest'
    
