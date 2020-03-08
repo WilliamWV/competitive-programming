@@ -5,10 +5,20 @@ jobs:
      - image: wwvargas/g_test:0.0.1
    steps:
      - checkout
-     - run: 
-        name: Building code
-        command: 'mkdir build && cd build && cmake .. && make'
-     - run:
-        name: Running tests
-        command: './build/globalTest'
-   
+     - run: 'mkdir build && cd build && cmake .. && make'
+  test:
+    docker:
+     - image: wwvargas/g_test:0.0.1
+    steps:
+     - checkout
+     - run: './build/globalTest'
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - test:
+        requires:
+          - build
+      
