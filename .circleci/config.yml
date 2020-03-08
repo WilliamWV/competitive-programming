@@ -15,20 +15,94 @@ jobs:
       - persist_to_workspace:
           root: build
           paths: .
-  test:
+
+  searching_test:
+    executor: g_test
+    steps:
+      - checkout
+      - attach_workspace:
+          at: build
+      - run: './build/searchTest'
+
+  sorting_test:
+    executor: g_test
+    steps:
+      - checkout
+      - attach_workspace:
+          at: build
+      - run: './build/sortTest'
+
+  math_test:
+    executor: g_test
+    steps:
+      - checkout
+      - attach_workspace:
+          at: build
+      - run: './build/mathTest'
+
+  geometry_test:
+    executor: g_test
+    steps:
+      - checkout
+      - attach_workspace:
+          at: build
+      - run: './build/geoTest'
+
+  graph_test:
+    executor: g_test
+    steps:
+      - checkout
+      - attach_workspace:
+          at: build
+      - run: './build/graphTest'
+
+  biginteger_test:
+    executor: g_test
+    steps:
+      - checkout
+      - attach_workspace:
+          at: build
+      - run: './build/bigIntegerTest'
+  
+  global_test:
     executor: g_test
     steps:
       - checkout
       - attach_workspace:
           at: build
       - run: './build/globalTest'
+  
 
 workflows:
   version: 2
   build-and-test:
     jobs:
       - build
-      - test:
+      - searching_test:
+        requires:
+          - build
+      - sorting_test:
+        requires:
+          - build
+      - math_test:
+        requires:
+          - build
+      - geometry_test:
+        requires:
+          - build
+      - graph_test:
           requires:
             - build
+      - biginteger_test:
+          requires:
+            - build
+      - global_test:
+          requires:
+            - searching_test
+            - sorting_test
+            - math_test
+            - geometry_test
+            - graph_test
+            - biginteger_test
+      
       
