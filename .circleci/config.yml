@@ -79,17 +79,17 @@ workflows:
     jobs:
       - build
       - searching_test:
-        requires:
-          - build
+          requires:
+            - build
       - sorting_test:
-        requires:
-          - build
+          requires:
+            - build
       - math_test:
-        requires:
-          - build
+          requires:
+            - build
       - geometry_test:
-        requires:
-          - build
+          requires:
+            - build
       - graph_test:
           requires:
             - build
