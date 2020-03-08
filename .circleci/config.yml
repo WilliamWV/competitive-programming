@@ -1,16 +1,26 @@
 version: 2
-jobs:
-  build:
+
+executors:
+  g_test:
     docker:
       - image: wwvargas/g_test:0.0.1
+    
+
+jobs:
+  build:
+    executor: g_test
     steps:
       - checkout
       - run: 'mkdir build && cd build && cmake .. && make'
+      - persist_to_workspace:
+          root: build
+          paths: .
   test:
-    docker:
-      - image: wwvargas/g_test:0.0.1
+    executor: g_test
     steps:
       - checkout
+      - attach_workspace:
+          at: build
       - run: './build/globalTest'
 
 workflows:
