@@ -1,17 +1,17 @@
 version: 2
 jobs:
- build:
-   docker:
-     - image: wwvargas/g_test:0.0.1
-   steps:
-     - checkout
-     - run: 'mkdir build && cd build && cmake .. && make'
+  build:
+    docker:
+      - image: wwvargas/g_test:0.0.1
+    steps:
+      - checkout
+      - run: 'mkdir build && cd build && cmake .. && make'
   test:
     docker:
-     - image: wwvargas/g_test:0.0.1
+      - image: wwvargas/g_test:0.0.1
     steps:
-     - checkout
-     - run: './build/globalTest'
+      - checkout
+      - run: './build/globalTest'
 
 workflows:
   version: 2
